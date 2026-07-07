@@ -24,10 +24,3 @@ Things you may want to cover:
 - ...
 
 
-echo "# my_tutor" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin git@github.com:da5ater/my_tutor.git
-git push -u origin main# my_tutor
