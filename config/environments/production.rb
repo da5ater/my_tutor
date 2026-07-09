@@ -105,4 +105,13 @@ config.action_mailer.smtp_settings = {
   authentication: :plain,
   enable_starttls_auto: true
 }
+
+require Rils.root.join("lib/brevo_delivery_method")
+
+config.action_mailer.add_delivery_method :brevo, BrevoDeliveryMethod, {
+  api_key: ENV["BREVO_API_KEY"]
+}
+
+config.action_mailer.delivery_method = :brevo
+config.action_mailer.perform_deliveries = true
 end
