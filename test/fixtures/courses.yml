@@ -1,0 +1,10 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: Introduction to Ruby on Rails 8
+  description: This is a comprehensive introduction to the Ruby on Rails web framework version 8.
+  user: one
+two:
+  title: Advanced Database Design and Optimization
+  description: This course covers index creation, query optimization, and normal forms.
+  user: two

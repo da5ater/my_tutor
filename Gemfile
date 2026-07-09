@@ -62,6 +62,9 @@ group :development, :test do
   gem "sqlite3"
 end
 
+group :production do
+  gem "pg"
+end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
@@ -70,3 +73,8 @@ group :test do
 end
 
 gem "simple_form"
+
+gem "faker"
+gem "devise"
+gem "friendly_id"
+gem "letter_opener_web"

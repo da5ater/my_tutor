@@ -87,4 +87,21 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.default_url_options = { host: ENV["APP_DOMAIN"] || "my-tutor-production.up.railway.app" }
+
+# SMTP configuration reading from environment variables
+config.action_mailer.smtp_settings = {
+  address:              ENV["SMTP_ADDRESS"] || "smtp-relay.brevo.com",
+  port:                 (ENV["SMTP_PORT"] || 587).to_i,
+  domain:               ENV["SMTP_DOMAIN"] || "railway.app",
+  user_name:            ENV["SMTP_USERNAME"],
+  password:             ENV["SMTP_PASSWORD"],
+  authentication:       "plain",
+  enable_starttls_auto: true
+}
 end

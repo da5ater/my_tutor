@@ -1,10 +1,143 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * Modern Design Tokens & Global Styles (Airbnb Inspired)
  */
+
+:root {
+  --primary-color: #ff385c;       /* Airbnb Rausch */
+  --primary-hover: #e00b41;
+  --primary-disabled: #ffd1da;
+  --ink-color: #222222;           /* Near Black */
+  --body-color: #3f3f3f;          /* Slate Body */
+  --muted-color: #6a6a6a;         /* Gray */
+  --hairline: #dddddd;            /* Thin borders */
+  --canvas-bg: #ffffff;           /* Clean white */
+  --surface-soft: #f7f7f7;        /* Off-white */
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--canvas-bg);
+  color: var(--body-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--ink-color);
+}
+
+.fw-extrabold {
+  font-weight: 800;
+}
+
+/* Accent Buttons */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #ffffff !important;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}
+
+.btn-outline-primary {
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  border-radius: 8px;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #ffffff !important;
+}
+
+.btn-outline-secondary {
+  color: var(--ink-color) !important;
+  border-color: var(--hairline) !important;
+  border-radius: 8px;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--surface-soft) !important;
+}
+
+/* Table Enhancements */
+.table th {
+  font-weight: 600;
+  color: var(--muted-color);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.table td {
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Card layout */
+.card-premium {
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background-color: var(--canvas-bg);
+  box-shadow: rgba(0, 0, 0, 0.04) 0 2px 6px, rgba(0, 0, 0, 0.08) 0 4px 8px;
+}
+
+/* Form Styles */
+.form-control:focus {
+  border-color: var(--ink-color) !important;
+  box-shadow: none !important;
+}
+
+/* Trix Editor Layout Customizations */
+trix-editor {
+  border: 1px solid var(--hairline) !important;
+  border-radius: 8px !important;
+  min-height: 200px !important;
+  padding: 12px !important;
+  background-color: var(--canvas-bg);
+}
+
+trix-editor:focus {
+  border-color: var(--ink-color) !important;
+  outline: none !important;
+}
+
+trix-toolbar .trix-button-group {
+  border: 1px solid var(--hairline) !important;
+  border-radius: 6px !important;
+}
+
+trix-toolbar .trix-button {
+  border-bottom: 1px solid var(--hairline) !important;
+}
+
+trix-toolbar .trix-button.trix-active {
+  background: #f2f2f2 !important;
+}
+
+/* Trix Content styles inside views */
+.trix-content {
+  line-height: 1.6;
+}
+
+.trix-content p {
+  margin-bottom: 1rem;
+}
+
+.trix-content ul, .trix-content ol {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+

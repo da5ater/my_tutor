@@ -1,0 +1,54 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4">
+        <h2 class="fw-extrabold text-dark font-heading mb-4 animate-fade-in">Account Settings</h2>
+
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs mb-4">
+            <%= f.input :email, required: true, autofocus: true, input_html: { class: "form-control py-2.5" } %>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div class="alert alert-info py-2 small my-2">
+                Currently waiting confirmation for: <strong><%= resource.unconfirmed_email %></strong>
+              </div>
+            <% end %>
+
+            <%= f.input :password,
+                        hint: "leave it blank if you don't want to change it",
+                        required: false,
+                        placeholder: "New Password",
+                        input_html: { autocomplete: "new-password", class: "form-control py-2.5" } %>
+            <%= f.input :password_confirmation,
+                        required: false,
+                        placeholder: "Confirm New Password",
+                        input_html: { autocomplete: "new-password", class: "form-control py-2.5" } %>
+            <%= f.input :current_password,
+                        hint: "we need your current password to confirm your changes",
+                        required: true,
+                        placeholder: "Current Password",
+                        input_html: { autocomplete: "current-password", class: "form-control py-2.5" } %>
+          </div>
+
+          <div class="form-actions">
+            <%= f.button :submit, "Update settings", class: "btn btn-primary btn-lg py-2.5 fw-bold shadow-sm w-100" %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="card border border-danger-subtle rounded-4 p-4 bg-danger-subtle bg-opacity-10">
+        <h4 class="text-danger fw-bold font-heading mb-2">Cancel my account</h4>
+        <p class="text-muted small mb-3">Once you cancel your account, all your courses and sessions will be permanently deleted. This action cannot be undone.</p>
+        <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "btn btn-outline-danger btn-sm fw-bold px-4 py-2" %>
+      </div>
+
+      <div class="mt-4">
+        <%= link_to :back, class: "btn btn-link px-0 text-decoration-none text-secondary fw-semibold d-inline-flex align-items-center gap-2" do %>
+          <i class="fa-solid fa-arrow-left"></i> Back
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

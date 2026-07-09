@@ -86,10 +86,7 @@ test:
 #
 production:
   primary: &primary_production
-    <<: *default
-    database: my_tutor_production
-    username: my_tutor
-    password: <%= ENV["MY_TUTOR_DATABASE_PASSWORD"] %>
+    url: <%= ENV.fetch("DATABASE_URL") %>
   cache:
     <<: *primary_production
     database: my_tutor_production_cache

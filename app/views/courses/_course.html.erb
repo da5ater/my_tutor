@@ -1,0 +1,40 @@
+<div class="card border border-light-subtle shadow-sm rounded-4 h-100 bg-white overflow-hidden d-flex flex-column animate-fade-in" id="<%= dom_id course %>">
+  <!-- Accent top bar (voltage color) -->
+  <div style="height: 6px; background-color: #ff385c;"></div>
+  
+  <div class="card-body p-4 d-flex flex-column flex-grow-1">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <span class="badge text-secondary bg-light border fw-normal small px-2 py-1">
+        <i class="fa-solid fa-book-open me-1" style="color: #ff385c;"></i> Course
+      </span>
+      <span class="text-muted small">
+        <i class="fa-regular fa-clock me-1"></i> <%= course.created_at.strftime('%b %d, %Y') %>
+      </span>
+    </div>
+    
+    <h5 class="card-title fw-extrabold text-dark font-heading mb-2">
+      <%= course.title %>
+    </h5>
+    
+    <div class="card-text text-secondary small flex-grow-1 mb-4" style="line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">
+      <%= strip_tags(course.description.to_plain_text).truncate(120) %>
+    </div>
+    
+    <div class="border-top pt-3 mt-auto">
+      <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+        <div class="d-flex align-items-center text-truncate">
+          <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border me-2" style="width: 32px; height: 32px; flex-shrink: 0;">
+            <i class="fa-solid fa-chalkboard-user text-secondary" style="font-size: 0.85rem;"></i>
+          </div>
+          <span class="text-secondary text-truncate small" title="<%= course.user&.email %>">
+            <%= course.user&.email || "Unknown Tutor" %>
+          </span>
+        </div>
+      </div>
+      
+      <%= link_to course_path(course), class: "btn btn-outline-primary btn-sm w-100 py-2 fw-bold d-flex align-items-center justify-content-center gap-1" do %>
+        View Course <i class="fa-solid fa-chevron-right small"></i>
+      <% end %>
+    </div>
+  </div>
+</div>

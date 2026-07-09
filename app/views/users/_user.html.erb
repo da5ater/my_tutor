@@ -1,0 +1,77 @@
+<div class="card border border-light-subtle shadow-sm rounded-4 h-100 bg-white overflow-hidden d-flex flex-column animate-fade-in" id="<%= dom_id user %>">
+  <!-- Top decorative bar -->
+  <div style="height: 6px; background-color: #ff385c;"></div>
+
+  <div class="card-body p-4 d-flex flex-column flex-grow-1">
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border" style="width: 54px; height: 54px; flex-shrink: 0;">
+        <i class="fa-solid fa-circle-user text-secondary" style="font-size: 2rem;"></i>
+      </div>
+      <div class="text-truncate">
+        <h6 class="fw-extrabold text-dark font-heading mb-1 text-truncate" title="<%= user.email %>">
+          <%= user.email %>
+        </h6>
+        <span class="text-muted small d-block mb-2">
+          <i class="fa-solid fa-clock me-1"></i> Joined <%= time_ago_in_words(user.created_at) %> ago
+        </span>
+        <div>
+          <% if user.confirmed_at.present? %>
+            <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-pill fw-semibold" style="font-size: 0.75rem;">
+              <i class="fa-solid fa-circle-check me-1"></i> Confirmed
+            </span>
+          <% else %>
+            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle px-2.5 py-1 rounded-pill fw-semibold" style="font-size: 0.75rem;">
+              <i class="fa-solid fa-circle-exclamation me-1"></i> Pending Confirmation
+            </span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Devise Trackable Details -->
+    <% if user.respond_to?(:sign_in_count) %>
+      <div class="border-top pt-3">
+        <h6 class="fw-bold text-dark font-heading mb-3 small text-uppercase" style="letter-spacing: 0.5px; color: #ff385c !important;">
+          <i class="fa-solid fa-chart-bar me-1"></i> Session Metrics
+        </h6>
+        
+        <div class="d-flex flex-column gap-2 small text-secondary">
+          <div class="d-flex align-items-center justify-content-between py-1 border-bottom border-light">
+            <span>Sign In Count</span>
+            <span class="badge bg-light text-dark border px-2 py-1 fw-bold"><%= user.sign_in_count || 0 %></span>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between py-1 border-bottom border-light">
+            <span>Last Signed In</span>
+            <span class="fw-semibold text-dark">
+              <% if user.last_sign_in_at.present? %>
+                <%= time_ago_in_words(user.last_sign_in_at) %> ago
+              <% else %>
+                <em class="text-muted">Never</em>
+              <% end %>
+            </span>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between py-1 border-bottom border-light">
+            <span>Current IP</span>
+            <code class="text-secondary bg-light px-2 py-0.5 rounded border small" style="font-size: 0.8rem;">
+              <%= user.current_sign_in_ip || "0.0.0.0" %>
+            </code>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between py-1">
+            <span>Last IP</span>
+            <code class="text-secondary bg-light px-2 py-0.5 rounded border small" style="font-size: 0.8rem;">
+              <%= user.last_sign_in_ip || "0.0.0.0" %>
+            </code>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="border-top pt-3 text-center text-muted small">
+        <i class="fa-solid fa-triangle-exclamation text-warning mb-1"></i>
+        <div>Trackable metrics offline.</div>
+      </div>
+    <% end %>
+  </div>
+</div>
