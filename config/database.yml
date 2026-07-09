@@ -87,6 +87,7 @@ test:
 production:
   primary: &primary_production
     url: <%= ENV["DATABASE_URL"] %>
+    adapter: postgresql
   cache:
     <<: *primary_production
     database: my_tutor_production_cache
