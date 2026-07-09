@@ -108,7 +108,7 @@ config.action_mailer.smtp_settings = {
 
 require Rails.root.join("lib/brevo_delivery_method")
 
-config.action_mailer.add_delivery_method :brevo, BrevoDeliveryMethod, {
+ActionMailer::Base.add_delivery_method :brevo, BrevoDeliveryMethod, {
   api_key: ENV["BREVO_API_KEY"]
 }
 
