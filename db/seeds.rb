@@ -1,6 +1,7 @@
 user = User.find_or_create_by!(email: "mohamed@example.com") do |u|
   u.password = "123456"
   u.password_confirmation = "123456"
+  u.skip_confirmation!
 end
 
 Course.destroy_all
