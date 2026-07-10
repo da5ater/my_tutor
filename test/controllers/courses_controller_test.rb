@@ -19,7 +19,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create course" do
     assert_difference("Course.count") do
-      post courses_url, params: { course: { description: "This is a test course description for testing purposes. It is at least 50 characters long to meet the minimum length requirement.", title: "Test Course" } }
+      post courses_url, params: { course: { description: "This is a test course description for testing purposes. It is at least 50 characters long to meet the minimum length requirement.", title: "Test Course", short_description: "Test short description", language: "English", level: "Beginner", price: 100, user: @user, slug: "test-course" } }
     end
 
     assert_redirected_to course_url(Course.last)
@@ -36,9 +36,9 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update course" do
-  patch course_url(@course), params: { course: { description: "This is an updated course description that is definitely longer than fifty characters to pass model validation.", title: "Updated Rails 8 Course" } }
-  assert_redirected_to course_url(@course)
-end
+    patch course_url(@course), params: { course: { description: "This is an updated course description that is definitely longer than fifty characters to pass model validation.", title: "Updated Rails 8 Course", user: @user, short_description: "Test short description", language: "English", level: "Beginner", price: 100, slug: "test-course" } }
+    assert_redirected_to course_url(@course)
+  end
 
   test "should destroy course" do
     assert_difference("Course.count", -1) do

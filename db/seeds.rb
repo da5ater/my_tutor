@@ -7,5 +7,14 @@ end
 Course.destroy_all
 
 30.times do
-  Course.create!(title: Faker::Educator.course_name, description: Faker::Hacker.say_something_smart, user: user)
+  Course.create!(
+    title: Faker::Educator.course_name,
+    description: Faker::Hacker.say_something_smart,
+    user: user,
+    short_description: Faker::Educator.course_name,
+    language: "English",
+    level: "Beginner",
+    price: 100,
+    slug: Faker::Educator.course_name.parameterize
+  )
 end
