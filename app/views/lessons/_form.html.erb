@@ -1,4 +1,4 @@
-<%= simple_form_for(@lesson) do |f| %>
+<%= simple_form_for([@course, @lesson]) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -12,8 +12,6 @@
       <%= f.label :content, class: "form-label fw-bold text-dark" %>
       <%= f.rich_textarea :content, class: "form-control rounded-3 border-light-subtle shadow-none p-3", style: "min-height: 250px;" %>
     </div>
-
-    <%= f.input :course_id, as: :hidden, input_html: { value: f.object.course_id || params[:course_id] } %>
   </div>
 
   <div class="form-actions d-flex gap-2">

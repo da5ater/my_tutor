@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :lessons
-  resources :courses
+  resources :courses do
+    resources :lessons
+  end
   get "up" => "rails/health#show", as: :rails_health_check
   root "home#index"
   get "activity", to: "home#activity"

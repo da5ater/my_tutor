@@ -74,7 +74,7 @@
             <span class="badge bg-light text-secondary border rounded-pill fs-6 px-2.5 py-1"><%= @course.lessons.count %></span>
           </h3>
           <% if current_user && policy(@course).edit? %>
-            <%= link_to new_lesson_path(course_id: @course.id), class: "btn btn-primary btn-sm rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-1" do %>
+            <%= link_to new_course_lesson_path(@course), class: "btn btn-primary btn-sm rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-1" do %>
               <i class="fa-solid fa-plus small"></i> Add Lesson
             <% end %>
           <% end %>
