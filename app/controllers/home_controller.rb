@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :index ]
+  skip_before_action :authenticate_user!, only: [ :index, :trigger_error ]
   def index
     @courses = Course.order(created_at: :desc).limit(3)
     @latest_courses = Course.order(created_at: :desc).limit(3)
