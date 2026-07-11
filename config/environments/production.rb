@@ -78,47 +78,27 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
-# Enable DNS rebinding protection and other `Host` header attacks.
-# config.hosts = [
-#   "example.com",     # Allow requests from example.com
-#   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-# ]
-#
-# Skip DNS rebinding protection for the default health check endpoint.
-# config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Enable DNS rebinding protection and other `Host` header attacks.
+  # config.hosts = [
+  #   "example.com",     # Allow requests from example.com
+  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
+  # ]
+  #
+  # Skip DNS rebinding protection for the default health check endpoint.
+  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-# config.action_mailer.delivery_method = :smtp
-config.action_mailer.perform_deliveries = true
-config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = {
+    host: ENV["APP_DOMAIN"] || ENV["RAILWAY_PUBLIC_DOMAIN"] || "example.com",
+    protocol: "https"
+  }
 
-config.action_mailer.default_url_options = {
-  host: ENV["APP_DOMAIN"] || "my-tutor-production.up.railway.app",
-  protocol: "https"
-}
+  require Rails.root.join("lib/brevo_delivery_method")
 
-config.action_mailer.smtp_settings = {
-  address: ENV["SMTP_ADDRESS"] || "smtp-relay.brevo.com",
-  port: (ENV["SMTP_PORT"] || 587).to_i,
-  domain: ENV["SMTP_DOMAIN"] || "railway.app",
-  user_name: ENV["SMTP_USERNAME"],
-  password: ENV["SMTP_PASSWORD"],
-  authentication: :plain,
-  enable_starttls_auto: true
-}
-
-require Rails.root.join("lib/brevo_delivery_method")
-
-ActionMailer::Base.add_delivery_method :brevo, BrevoDeliveryMethod, {
-  api_key: ENV["BREVO_API_KEY"]
-}
+  ActionMailer::Base.add_delivery_method :brevo, BrevoDeliveryMethod, {
+    api_key: ENV["BREVO_API_KEY"]
+  }
 
   config.action_mailer.delivery_method = :brevo
   config.action_mailer.perform_deliveries = true
-
-  config.middleware.use ExceptionNotification::Rack,
-    email: {
-      email_prefix: "[Tutor Error] ",
-      sender_address: ENV["MAILER_SENDER"] || %{"Tutor Notifier" <vincentvan205ater@gmail.com>},
-      exception_recipients: %w[vincentvan205ater@gmail.com]
-    }
+  config.action_mailer.raise_delivery_errors = true
 end
