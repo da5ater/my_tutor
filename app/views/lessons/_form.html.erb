@@ -8,9 +8,8 @@
       <%= f.input :title, label: false, input_html: { class: "form-control rounded-3 border-light-subtle shadow-none py-2.5 fs-5 fw-semibold" }, placeholder: "Enter a descriptive lesson title..." %>
     </div>
 
-    <div class="mb-3 trix-form-field">
-      <%= f.label :content, class: "form-label fw-bold text-dark" %>
-      <%= f.rich_textarea :content, class: "form-control rounded-3 border-light-subtle shadow-none p-3", style: "min-height: 250px;" %>
+    <div class="mb-3">
+      <%= f.input :content, as: :rich_text_area, required: true, label_html: { class: "fw-bold text-dark" }, input_html: { class: "form-control rounded-3 border-light-subtle shadow-none p-3", style: "min-height: 250px;" } %>
     </div>
   </div>
 

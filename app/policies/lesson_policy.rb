@@ -11,7 +11,7 @@ class LessonPolicy < ApplicationPolicy
   end
 
   def new?
-    create?
+    @user.has_role?(:admin) || @record.course.user == @user
   end
 
   def update?
