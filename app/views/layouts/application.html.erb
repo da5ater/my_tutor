@@ -51,16 +51,24 @@
             <li class="nav-item">
               <%= link_to "Courses", courses_path, class: "nav-link fw-bold px-3 text-secondary" %>
             </li>
+            <% if current_user && policy(User).index? %>
+              <li class="nav-item">
+                <%= link_to "Users", users_path, class: "nav-link fw-bold px-3 text-secondary" %>
+              </li>
+            <% end %>
             <li class="nav-item">
-              <%= link_to "Users", users_path, class: "nav-link fw-bold px-3 text-secondary" %>
+              <%= link_to activity_path, class: "nav-link fw-bold px-3 text-secondary d-flex align-items-center gap-1" do %>
+                <i class="fa-solid fa-bell"></i> Activity
+              <% end %>
             </li>
           </ul>
           
-          <!-- Navbar Search Form -->
-          <%= form_with(url: courses_path, method: :get, local: true, class: "d-none d-md-flex align-items-center gap-2 bg-light p-1 rounded-pill border me-auto", style: "max-width: 260px;") do |f| %>
-            <%= f.text_field :title, value: params[:title], placeholder: "Search courses...", class: "form-control border-0 bg-transparent py-1 px-3 small", style: "box-shadow: none; font-size: 0.85rem; color: #222;" %>
-            <%= f.button type: :submit, class: "btn btn-primary rounded-circle p-1 d-flex align-items-center justify-content-center", style: "width: 28px; height: 28px;" do %>
-              <i class="fa-solid fa-magnifying-glass" style="font-size: 0.75rem;"></i>
+          <% if user_signed_in? %>
+            <%= search_form_for @ransack_courses, as: :courses_search, url: courses_path, method: :get, html: { class: "d-none d-md-flex align-items-center gap-2 bg-light p-1 rounded-pill border me-auto", role: "search" } do |f| %>
+              <%= f.search_field :title_or_short_description_cont, placeholder: "Search courses...", aria: { label: "Search courses" }, class: "form-control border-0 bg-transparent py-1 px-3 small", style: "box-shadow: none; font-size: 0.85rem; color: #222; min-width: 0;" %>
+              <%= f.button type: :submit, class: "btn btn-primary rounded-circle p-1 d-flex align-items-center justify-content-center flex-shrink-0", style: "width: 28px; height: 28px;", title: "Search courses", aria: { label: "Search courses" } do %>
+                <i class="fa-solid fa-magnifying-glass" style="font-size: 0.75rem;"></i>
+              <% end %>
             <% end %>
           <% end %>
 
@@ -91,6 +99,7 @@
     <%= render "layouts/messages" %>
 
     <%= yield %>
+
+    <%= render "layouts/footer" %>
   </body>
 </html>
-

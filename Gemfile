@@ -78,3 +78,8 @@ gem "faker"
 gem "devise"
 gem "friendly_id"
 gem "letter_opener_web"
+gem "ransack"
+gem "public_activity"
+gem "rolify"
+
+gem "pundit", "~> 2.5"

@@ -1,0 +1,9 @@
+<div class="container py-5" style="max-width: 680px;">
+  <div class="mb-4">
+    <%= link_to users_path, class: "btn btn-link px-0 text-decoration-none d-inline-flex align-items-center gap-2 fw-semibold text-secondary" do %>
+      <i class="fa-solid fa-arrow-left"></i> Back to Users Directory
+    <% end %>
+  </div>
+
+  <%= render 'users/user', user: @user %>
+</div>

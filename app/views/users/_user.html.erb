@@ -8,8 +8,13 @@
         <i class="fa-solid fa-circle-user text-secondary" style="font-size: 2rem;"></i>
       </div>
       <div class="text-truncate">
-        <h6 class="fw-extrabold text-dark font-heading mb-1 text-truncate" title="<%= user.email %>">
-          <%= user.email %>
+        <h6 class="fw-extrabold text-dark font-heading mb-1 text-truncate d-flex align-items-center gap-2" title="<%= user.email %>">
+          <% if user.respond_to?(:online?) && user.online? %>
+            <i class="fa-solid fa-circle text-success" style="font-size: 0.65rem;" title="Online"></i>
+          <% else %>
+            <i class="fa-solid fa-circle text-danger" style="font-size: 0.65rem;" title="Offline"></i>
+          <% end %>
+          <%= link_to user.email, user, class: "text-decoration-none text-dark hover-underline" %>
         </h6>
         <span class="text-muted small d-block mb-2">
           <i class="fa-solid fa-clock me-1"></i> Joined <%= time_ago_in_words(user.created_at) %> ago
@@ -24,6 +29,14 @@
               <i class="fa-solid fa-circle-exclamation me-1"></i> Pending Confirmation
             </span>
           <% end %>
+          
+          <div class="mt-2 d-flex flex-wrap gap-1">
+            <% user.roles.each do |role| %>
+              <span class="badge bg-info text-white rounded-pill px-2.5 py-1 fw-semibold" style="font-size: 0.75rem;">
+                <%= role.name.titleize %>
+              </span>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
@@ -72,6 +85,14 @@
         <i class="fa-solid fa-triangle-exclamation text-warning mb-1"></i>
         <div>Trackable metrics offline.</div>
       </div>
+    <% end %>
+  </div>
+
+  <div class="card-footer bg-light border-top p-3 d-flex justify-content-end">
+    <% if policy(user).edit? %>
+      <%= link_to edit_user_path(user), class: "btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold d-inline-flex align-items-center gap-1" do %>
+        <i class="fa-solid fa-user-gear"></i> Edit Roles
+      <% end %>
     <% end %>
   </div>
 </div>

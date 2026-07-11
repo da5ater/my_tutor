@@ -21,16 +21,20 @@
     </div>
     
     <div class="border-top pt-3 mt-auto">
-      <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
-        <div class="d-flex align-items-center text-truncate">
-          <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border me-2" style="width: 32px; height: 32px; flex-shrink: 0;">
-            <i class="fa-solid fa-chalkboard-user text-secondary" style="font-size: 0.85rem;"></i>
+        <div class="d-flex align-items-center justify-content-between w-100 mb-3">
+          <div class="d-flex align-items-center text-truncate">
+            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border me-2" style="width: 32px; height: 32px; flex-shrink: 0;">
+              <i class="fa-solid fa-chalkboard-user text-secondary" style="font-size: 0.85rem;"></i>
+            </div>
+            <span class="text-secondary text-truncate small" title="<%= course.user&.email %>">
+              <%= course.user&.username || "Unknown Tutor" %>
+            </span>
           </div>
-          <span class="text-secondary text-truncate small" title="<%= course.user&.email %>">
-            <%= course.user&.email || "Unknown Tutor" %>
-          </span>
+          <div class="d-flex align-items-center text-muted small gap-1 flex-shrink-0">
+            <i class="fa-solid fa-book-bookmark" style="color: #ff385c;"></i>
+            <span class="fw-bold"><%= pluralize(course.lessons.count, "lesson") %></span>
+          </div>
         </div>
-      </div>
       
       <%= link_to course_path(course), class: "btn btn-outline-primary btn-sm w-100 py-2 fw-bold d-flex align-items-center justify-content-center gap-1" do %>
         View Course <i class="fa-solid fa-chevron-right small"></i>

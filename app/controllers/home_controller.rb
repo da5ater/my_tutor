@@ -7,4 +7,8 @@ class HomeController < ApplicationController
     @instructors_count = User.joins(:courses).distinct.count
     @users_count = User.count
   end
+
+  def activity
+    @activities = PublicActivity::Activity.order(created_at: :desc).all
+  end
 end

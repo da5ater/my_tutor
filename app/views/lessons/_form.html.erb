@@ -1,0 +1,24 @@
+<%= simple_form_for(@lesson) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs mb-4">
+    <div class="mb-3">
+      <%= f.label :title, class: "form-label fw-bold text-dark" %>
+      <%= f.input :title, label: false, input_html: { class: "form-control rounded-3 border-light-subtle shadow-none py-2.5 fs-5 fw-semibold" }, placeholder: "Enter a descriptive lesson title..." %>
+    </div>
+
+    <div class="mb-3 trix-form-field">
+      <%= f.label :content, class: "form-label fw-bold text-dark" %>
+      <%= f.rich_textarea :content, class: "form-control rounded-3 border-light-subtle shadow-none p-3", style: "min-height: 250px;" %>
+    </div>
+
+    <%= f.input :course_id, as: :hidden, input_html: { value: f.object.course_id || params[:course_id] } %>
+  </div>
+
+  <div class="form-actions d-flex gap-2">
+    <%= f.button :submit, class: "btn btn-primary px-4 py-2.5 rounded-pill fw-bold" %>
+    <% back_path = @lesson.course ? course_path(@lesson.course) : courses_path %>
+    <%= link_to "Cancel", back_path, class: "btn btn-outline-secondary px-4 py-2.5 rounded-pill fw-bold" %>
+  </div>
+<% end %>
