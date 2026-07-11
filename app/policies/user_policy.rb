@@ -13,8 +13,8 @@ class UserPolicy < ApplicationPolicy
   end
 
 
-  def show
-    @user.present?
+  def show?
+    @user.has_role?(:admin) || @record.user == @user
   end
 
   def index?
