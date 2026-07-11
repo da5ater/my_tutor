@@ -3,7 +3,7 @@ class LessonPolicy < ApplicationPolicy
   end
 
   def show?
-    @user.present?
+    @user.has_role?(:admin) || @record.course.user_id == @user.id
   end
 
   def create?

@@ -5,7 +5,11 @@
         <%= link_to lesson.title, lesson, class: "text-decoration-none text-dark hover-text-primary" %>
       </h5>
       <div class="text-secondary small text-truncate" style="max-height: 40px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">
-        <%= strip_tags(lesson.content.to_plain_text).truncate(80) %>
+        <% if current_user && defined?(LessonPolicy) && policy(lesson).show? %>
+          <%= strip_tags(lesson.content.to_plain_text).truncate(80) %>
+        <% else %>
+          <span class="text-muted"><i class="fa-solid fa-lock me-1 small"></i> Content is locked</span>
+        <% end %>
       </div>
     </div>
     

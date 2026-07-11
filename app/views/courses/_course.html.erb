@@ -27,7 +27,11 @@
               <i class="fa-solid fa-chalkboard-user text-secondary" style="font-size: 0.85rem;"></i>
             </div>
             <span class="text-secondary text-truncate small" title="<%= course.user&.email %>">
-              <%= course.user&.username || "Unknown Tutor" %>
+              <% if course.user %>
+                <%= link_to course.user.username, user_path(course.user), class: "text-decoration-none text-secondary hover-underline fw-semibold" %>
+              <% else %>
+                Unknown Tutor
+              <% end %>
             </span>
           </div>
           <div class="d-flex align-items-center text-muted small gap-1 flex-shrink-0">
