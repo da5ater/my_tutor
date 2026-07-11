@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   root "home#index"
   get "activity", to: "home#activity"
+  get "trigger_error", to: "home#trigger_error"
   get "privacy_policy", to: "static_pages#privacy_policy"
 
   devise_for :users, controllers: {

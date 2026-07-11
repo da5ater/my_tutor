@@ -11,4 +11,8 @@ class HomeController < ApplicationController
   def activity
     @activities = PublicActivity::Activity.order(created_at: :desc).all
   end
+
+  def trigger_error
+    raise "This is a test production error for ExceptionNotification!"
+  end
 end

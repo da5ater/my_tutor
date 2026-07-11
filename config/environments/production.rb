@@ -112,6 +112,13 @@ ActionMailer::Base.add_delivery_method :brevo, BrevoDeliveryMethod, {
   api_key: ENV["BREVO_API_KEY"]
 }
 
-config.action_mailer.delivery_method = :brevo
-config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :brevo
+  config.action_mailer.perform_deliveries = true
+
+  config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix: "[Tutor Error] ",
+      sender_address: ENV["MAILER_SENDER"] || %{"Tutor Notifier" <vincentvan205ater@gmail.com>},
+      exception_recipients: %w[vincentvan205ater@gmail.com]
+    }
 end

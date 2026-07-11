@@ -25,10 +25,10 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def new?
-    @user.has_role?(:admin) || @user.has_role?(:teacher) ||@record.user = @users
+    @user.has_role?(:admin) || @user.has_role?(:teacher)
   end
 
   def create?
-    @user.has_role?(:admin) || @user.has_role?(:teacher) || @record.user = @user
+    @user.has_role?(:admin) || @user.has_role?(:teacher)
   end
 end

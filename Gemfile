@@ -81,5 +81,5 @@ gem "letter_opener_web"
 gem "ransack"
 gem "public_activity"
 gem "rolify"
-
 gem "pundit", "~> 2.5"
+gem "exception_notification"
