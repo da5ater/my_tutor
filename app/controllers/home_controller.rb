@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :index, :trigger_error ]
+  skip_before_action :authenticate_user!, only: [ :index ]
   def index
     @courses = Course.order(created_at: :desc).limit(3)
     @latest_courses = Course.order(created_at: :desc).limit(3)
@@ -10,9 +10,5 @@ class HomeController < ApplicationController
 
   def activity
     @activities = PublicActivity::Activity.order(created_at: :desc).all
-  end
-
-  def trigger_error
-    raise "This is a test production error for ExceptionNotification!"
   end
 end
