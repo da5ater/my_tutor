@@ -31,7 +31,7 @@
   <div class="card-body p-4">
     <div class="d-flex align-items-center gap-2 mb-3">
       <% if enrollment.rating.present? %>
-        <span class="text-warning fs-5"><i class="fa-solid fa-star"></i></span>
+        <span class="fs-5" style="color: var(--ink-color) !important;"><i class="fa-solid fa-star"></i></span>
         <span class="fw-bold fs-5 text-dark"><%= enrollment.rating %>/5</span>
       <% else %>
         <span class="text-muted small italic">Not rated yet</span>

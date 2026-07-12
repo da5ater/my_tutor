@@ -15,6 +15,8 @@ class Enrollment < ApplicationRecord
 
   scope :pending_review, -> { where(rating: nil, review: nil) }
 
+  extend FriendlyId
+  friendly_id :to_s, use: :slugged
 
 
   protected
