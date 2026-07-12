@@ -54,7 +54,18 @@
                   %>
                   <span class="text-secondary mx-1"><%= action_verb %> the <%= trackable_name %></span>
                   <% if activity.trackable %>
-                    <%= link_to activity.trackable.to_s, activity.trackable, class: "fw-bold text-decoration-none hover-underline", style: "color: #ff385c !important;" %>
+                    <%
+                      trackable_path = if activity.trackable.is_a?(Lesson)
+                                         activity.trackable.course ? course_lesson_path(activity.trackable.course, activity.trackable) : nil
+                                       else
+                                         activity.trackable
+                                       end
+                    %>
+                    <% if trackable_path %>
+                      <%= link_to activity.trackable.to_s, trackable_path, class: "fw-bold text-decoration-none hover-underline", style: "color: #ff385c !important;" %>
+                    <% else %>
+                      <span class="fw-bold text-dark"><%= activity.trackable.to_s %></span>
+                    <% end %>
                   <% else %>
                     <span class="fw-semibold text-secondary italic">a <%= trackable_name %> (ID: <%= activity.trackable_id %> - deleted)</span>
                   <% end %>

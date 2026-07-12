@@ -19,6 +19,14 @@ class Enrollment < ApplicationRecord
   friendly_id :to_s, use: :slugged
 
 
+  def self.ransackable_attributes(auth_object = nil)
+    [  "created_at", "id", "rating", "review", "updated_at" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "course", "user" ]
+  end
+
   protected
   def cant_subscribe_to_own_course
     if self.new_record? &&  self.user.present? &&  self.user_id == self.course.user_id
