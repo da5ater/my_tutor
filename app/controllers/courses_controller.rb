@@ -77,7 +77,7 @@ class CoursesController < ApplicationController
   end
 
 
-  def purchased
+def purchased
     @ransack_path = purchased_courses_path
 
     purchased_courses = Course.joins(:enrollments).where(enrollments: { user_id: current_user.id })

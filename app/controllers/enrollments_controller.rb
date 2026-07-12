@@ -39,7 +39,7 @@ class EnrollmentsController < ApplicationController
     authorize @enrollment
     respond_to do |format|
       if @enrollment.update(enrollment_params)
-        format.html { redirect_to @enrollment, notice: "Enrollment was successfully updated.", status: :see_other }
+        format.html { redirect_to course_path(@enrollment.course), notice: "Enrollment was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @enrollment }
       else
         format.html { render :edit, status: :unprocessable_content }

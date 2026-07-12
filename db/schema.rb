@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_12_123830) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_12_171244) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -66,8 +66,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_123830) do
   end
 
   create_table "courses", force: :cascade do |t|
+    t.float "average_rating", default: 0.0, null: false
     t.datetime "created_at", null: false
     t.text "description"
+    t.integer "enrollments_count", default: 0, null: false
     t.string "language", default: "English", null: false
     t.string "level", default: "Beginer", null: false
     t.integer "price", default: 0, null: false

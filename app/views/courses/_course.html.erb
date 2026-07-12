@@ -4,9 +4,24 @@
   
   <div class="card-body p-4 d-flex flex-column flex-grow-1">
     <div class="d-flex align-items-center justify-content-between mb-2">
-      <span class="badge text-secondary bg-light border fw-normal small px-2 py-1">
-        <i class="fa-solid fa-book-open me-1" style="color: #ff385c;"></i> Course
-      </span>
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge text-secondary bg-light border fw-normal small px-2 py-1">
+          <i class="fa-solid fa-book-open me-1" style="color: #ff385c;"></i> Course
+        </span>
+        <% 
+          rated_enrollments = course.enrollments.where.not(rating: nil)
+          avg_rating = (course.respond_to?(:average_rating) && course.average_rating.present? && course.average_rating > 0) ? course.average_rating : (rated_enrollments.any? ? rated_enrollments.average(:rating).round(1).to_f : 0.0)
+          students_count = course.respond_to?(:enrollments_count) ? course.enrollments_count : course.enrollments.count
+        %>
+        <% if avg_rating > 0 %>
+          <span class="badge text-dark bg-light border fw-bold small px-2 py-1" title="Average Rating">
+            <i class="fa-solid fa-star" style="color: var(--ink-color);"></i> <%= avg_rating %>
+          </span>
+        <% end %>
+        <span class="badge text-secondary bg-light border fw-bold small px-2 py-1" title="Enrolled Students">
+          <i class="fa-solid fa-user-group me-1" style="color: #ff385c;"></i> <%= students_count %>
+        </span>
+      </div>
       <span class="text-muted small">
         <i class="fa-regular fa-clock me-1"></i> <%= course.created_at.strftime('%b %d, %Y') %>
       </span>

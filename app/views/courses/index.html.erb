@@ -82,6 +82,7 @@
                   <%= sort_link(@ransack_courses, :title, "Course Title", class: "text-decoration-none text-secondary fw-bold") %>
                 </th>
                 <th scope="col" class="py-3 px-4 text-secondary font-heading fw-bold">Details</th>
+                <th scope="col" class="py-3 px-4 text-secondary font-heading fw-bold">Rating</th>
                 <th scope="col" class="py-3 px-4 text-secondary font-heading fw-bold">Teacher</th>
                 <th scope="col" class="py-3 px-4 text-secondary font-heading fw-bold text-end" style="width: 22%;">Actions</th>
               </tr>
@@ -99,7 +100,23 @@
                         <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><%= course.language %></span>
                         <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><%= course.level %></span>
                         <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><%= number_to_currency(course.price, precision: 0) %></span>
+                        <span class="badge bg-light text-secondary border rounded-pill px-3 py-2" title="Enrolled Students">
+                          <i class="fa-solid fa-user-group me-1" style="color: #ff385c;"></i> <%= course.respond_to?(:enrollments_count) ? course.enrollments_count : course.enrollments.count %>
+                        </span>
                       </div>
+                    </td>
+                    <td class="py-3 px-4">
+                      <% 
+                        rated_enrollments = course.enrollments.where.not(rating: nil)
+                        avg_rating = (course.respond_to?(:average_rating) && course.average_rating.present? && course.average_rating > 0) ? course.average_rating : (rated_enrollments.any? ? rated_enrollments.average(:rating).round(1).to_f : 0.0)
+                      %>
+                      <% if avg_rating > 0 %>
+                        <span class="badge text-dark bg-light border fw-bold small px-2 py-1" title="Average Rating">
+                          <i class="fa-solid fa-star" style="color: var(--ink-color);"></i> <%= avg_rating %>
+                        </span>
+                      <% else %>
+                        <span class="text-muted small italic">No ratings</span>
+                      <% end %>
                     </td>
                     <td class="py-3 px-4 text-secondary small"><%= course.user&.username || "Unknown Tutor" %></td>
                     <td class="py-3 px-4 text-end">
@@ -123,7 +140,7 @@
                 <% end %>
               <% else %>
                 <tr>
-                  <td colspan="4" class="text-center py-5 text-muted">
+                  <td colspan="5" class="text-center py-5 text-muted">
                     <i class="fa-solid fa-folder-open fa-2x mb-3 d-block opacity-50"></i>
                     No courses found. Try a different search.
                   </td>

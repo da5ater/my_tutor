@@ -38,6 +38,19 @@
               Unknown Tutor
             <% end %>
           </span>
+          <% 
+            rated_enrollments = @course.enrollments.where.not(rating: nil)
+            avg_rating = (@course.respond_to?(:average_rating) && @course.average_rating.present? && @course.average_rating > 0) ? @course.average_rating : (rated_enrollments.any? ? rated_enrollments.average(:rating).round(1).to_f : 0.0)
+            students_count = @course.respond_to?(:enrollments_count) ? @course.enrollments_count : @course.enrollments.count
+          %>
+          <% if avg_rating > 0 %>
+            <span class="badge bg-light text-dark border px-3 py-2 fw-bold" title="Average Rating">
+              <i class="fa-solid fa-star" style="color: var(--ink-color);"></i> <%= avg_rating %>
+            </span>
+          <% end %>
+          <span class="badge bg-light text-secondary border px-3 py-2 fw-bold" title="Enrolled Students">
+            <i class="fa-solid fa-user-group me-1" style="color: #ff385c;"></i> <%= pluralize(students_count, 'student') %>
+          </span>
           <%= enrollment_button(@course) %>
           <%= review_button(@course) %>
         </div>
@@ -98,6 +111,78 @@
             </div>
           <% end %>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="row g-4 mt-2">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+        <h3 class="fw-extrabold text-dark font-heading mb-4 d-flex align-items-center gap-2">
+          <i class="fa-solid fa-star text-primary" style="color: var(--ink-color) !important;"></i> Reviews
+          <span class="badge bg-light text-secondary border rounded-pill fs-6 px-2.5 py-1">
+            <%= @course.enrollments.where.not(rating: nil).count %>
+          </span>
+        </h3>
+        
+        <% reviews = @course.enrollments.where.not(rating: nil).order(updated_at: :desc) %>
+        <% if reviews.any? %>
+          <!-- Airbnb-style Rating Display Card & distribution -->
+          <div class="row g-4 mb-5 pb-4 border-bottom align-items-center">
+            <!-- Left Side: Large Rating Summary -->
+            <div class="col-md-4 d-flex flex-column align-items-center align-items-md-start border-end border-light-subtle pr-md-4">
+              <div class="d-flex align-items-center gap-3">
+                <span class="fw-extrabold font-heading text-dark m-0" style="font-size: 3.5rem; line-height: 1;"><%= avg_rating %></span>
+                <div>
+                  <div class="d-flex text-dark fs-5">
+                    <% avg_rating.round.times do %>
+                      <i class="fa-solid fa-star text-dark"></i>
+                    <% end %>
+                    <% (5 - avg_rating.round).times do %>
+                      <i class="fa-regular fa-star text-secondary"></i>
+                    <% end %>
+                  </div>
+                  <div class="text-secondary small fw-semibold mt-1">
+                    <%= pluralize(reviews.count, 'student review') %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Side: Star Breakdown Bars -->
+            <div class="col-md-8 pl-md-4">
+              <div class="d-flex flex-column gap-2 ms-md-4" style="max-width: 450px;">
+                <% (1..5).to_a.reverse.each do |stars| %>
+                  <% 
+                    count_stars = reviews.where(rating: stars).count
+                    pct = reviews.count > 0 ? (count_stars.to_f / reviews.count * 100).round : 0
+                  %>
+                  <div class="d-flex align-items-center gap-3">
+                    <span class="text-secondary small fw-semibold" style="width: 50px;"><%= stars %> <%= 'star'.pluralize(stars) %></span>
+                    <div class="progress flex-grow-1" style="height: 6px; background-color: var(--surface-soft); border-radius: 3px;">
+                      <div class="progress-bar bg-dark" role="progressbar" style="width: <%= pct %>%; border-radius: 3px;" aria-valuenow="<%= pct %>" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <span class="text-muted small" style="width: 35px; text-align: right;"><%= pct %>%</span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <% reviews.each do |enrollment| %>
+              <div class="col">
+                <%= render 'enrollments/enrollment', enrollment: enrollment %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-5 text-muted">
+            <i class="fa-regular fa-star fs-1 mb-3 text-secondary opacity-50"></i>
+            <p class="m-0 fw-semibold">No reviews left for this course yet.</p>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

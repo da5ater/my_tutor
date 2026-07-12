@@ -55,6 +55,16 @@ class Course < ApplicationRecord
     self.enrollments.where(user_id: user.id).exists?
   end
 
+    def update_rating
+    rated_enrollments = enrollments.where.not(rating: nil)
+    if enrollments.any? && rated_enrollments.any?
+      update_column :average_rating, rated_enrollments.average(:rating).round(2).to_f
+    else
+      update_column :average_rating, 0.0
+    end
+  end
+
+
   private
 
   def check_description_changes
