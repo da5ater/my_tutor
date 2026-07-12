@@ -29,7 +29,7 @@
         
         <h1 class="display-6 fw-extrabold text-dark mb-3 font-heading"><%= @course.title %></h1>
         
-        <div class="d-flex align-items-center gap-2 mb-4 pb-3 border-bottom">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-4 pb-3 border-bottom">
           <span class="badge bg-light text-secondary border px-3 py-2 fw-normal">
             <i class="fa-solid fa-chalkboard-user me-1"></i> Tutor: 
             <% if @course.user %>
@@ -38,6 +38,7 @@
               Unknown Tutor
             <% end %>
           </span>
+          <%= enrollment_button(@course) %>
         </div>
         
         <div class="trix-content text-secondary mb-5 fs-5 flex-grow-1" style="line-height: 1.6;">

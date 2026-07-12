@@ -49,6 +49,12 @@ class Course < ApplicationRecord
 
   has_many :enrollments
 
+  def bought?(user)
+    return false unless user
+
+    self.enrollments.where(user_id: user.id).exists?
+  end
+
   private
 
   def check_description_changes
