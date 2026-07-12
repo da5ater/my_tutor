@@ -15,6 +15,8 @@ class Enrollment < ApplicationRecord
 
   scope :pending_review, -> { where(rating: nil, review: nil) }
 
+
+
   protected
   def cant_subscribe_to_own_course
     if self.new_record? &&  self.user.present? &&  self.user_id == self.course.user_id
