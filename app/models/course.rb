@@ -47,6 +47,8 @@ class Course < ApplicationRecord
   before_save :check_description_changes
   after_update :track_update
 
+  has_many :enrollments
+
   private
 
   def check_description_changes

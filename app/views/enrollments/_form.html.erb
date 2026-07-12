@@ -1,0 +1,16 @@
+
+<%= simple_form_for(@enrollment, html: { class: "needs-validation" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs mb-4 d-flex flex-column gap-3">
+    <%= f.association :course, input_html: { class: "form-select py-2.5" } %>
+    <%= f.association :user, label_method: :email, input_html: { class: "form-select py-2.5" } %>
+    <%= f.input :rating, placeholder: "Rating (1 to 5)", input_html: { class: "form-control py-2.5", min: 1, max: 5 } %>
+    <%= f.input :review, placeholder: "Write your review...", input_html: { class: "form-control py-2.5", rows: 4 } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: "btn btn-primary w-100 py-2.5 fw-bold shadow-sm rounded-3" %>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_11_134112) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_12_093825) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -78,6 +78,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_134112) do
     t.integer "user_id", null: false
     t.index ["slug"], name: "index_courses_on_slug", unique: true
     t.index ["user_id"], name: "index_courses_on_user_id"
+  end
+
+  create_table "enrollments", force: :cascade do |t|
+    t.integer "course_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "price"
+    t.integer "rating"
+    t.text "review"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -148,5 +160,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_134112) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "courses", "users"
+  add_foreign_key "enrollments", "courses"
+  add_foreign_key "enrollments", "users"
   add_foreign_key "lessons", "courses"
 end

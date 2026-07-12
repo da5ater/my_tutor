@@ -13,14 +13,9 @@
 
   <div class="card-premium p-3 p-md-4 mb-4">
     <%= search_form_for @q, url: users_path, method: :get, html: { class: "row g-3 align-items-end" } do |f| %>
-      <div class="col-12 col-md-5">
+      <div class="col-12 col-md-9">
         <%= f.label :email_cont, "Email", class: "form-label fw-semibold small text-secondary" %>
         <%= f.search_field :email_cont, placeholder: "Search by email", class: "form-control rounded-pill px-4" %>
-      </div>
-
-      <div class="col-12 col-md-4">
-        <%= f.label :sign_in_count_eq, "Sign in count", class: "form-label fw-semibold small text-secondary" %>
-        <%= f.search_field :sign_in_count_eq, placeholder: "Exact count", class: "form-control rounded-pill px-4" %>
       </div>
 
       <div class="col-12 col-md-3 d-flex gap-2">

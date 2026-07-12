@@ -61,6 +61,13 @@
                 <i class="fa-solid fa-bell"></i> Activity
               <% end %>
             </li>
+            <% if current_user %>
+              <li class="nav-item">
+                <%= link_to enrollments_path, class: "nav-link fw-bold px-3 text-secondary d-flex align-items-center gap-1" do %>
+                  <i class="fa-solid fa-lock-open"></i> Enrollments
+                <% end %>
+              </li>
+            <% end %>
           </ul>
           
           <% if user_signed_in? %>

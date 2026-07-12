@@ -1,0 +1,39 @@
+<div class="container py-5" style="max-width: 720px;">
+  <% content_for :title, "Editing Enrollment" %>
+
+  <div class="mb-4">
+    <%= link_to enrollments_path, class: "btn btn-link px-0 text-decoration-none d-inline-flex align-items-center gap-2 fw-semibold text-secondary" do %>
+      <i class="fa-solid fa-arrow-left"></i> Back to Enrollments
+    <% end %>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+    <!-- Card header with Lock Open Icon -->
+    <div class="card-header bg-white border-bottom p-4 d-flex align-items-center gap-3">
+      <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; color: #ff385c;">
+        <i class="fa-solid fa-lock-open fs-4"></i>
+      </div>
+      <div>
+        <h4 class="fw-extrabold text-dark m-0 font-heading">
+          Editing Enrollment
+        </h4>
+        <small class="text-secondary">#<%= @enrollment.id %> • <%= @enrollment.user&.email if @enrollment.user %></small>
+      </div>
+    </div>
+
+    <!-- Card body with Form -->
+    <div class="card-body p-4 p-md-5">
+      <%= render "form", enrollment: @enrollment %>
+    </div>
+
+    <!-- Card footer with links -->
+    <div class="card-footer bg-light border-top p-4 d-flex justify-content-between">
+      <%= link_to @enrollment, class: "btn btn-outline-secondary px-3 py-2 fw-semibold rounded-2" do %>
+        <i class="fa-solid fa-eye"></i> Show
+      <% end %>
+      <%= link_to enrollments_path, class: "btn btn-outline-secondary px-3 py-2 fw-semibold rounded-2" do %>
+        Back to List
+      <% end %>
+    </div>
+  </div>
+</div>
