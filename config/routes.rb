@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
-  resources :enrollments
+  resources :enrollments do
+    get :my_students, on: :collection
+  end
   resources :courses do
+    get :purchased, on: :collection
+    get :pending_review, on: :collection
+    get :created, on: :collection
     resources :lessons
-    resource :enrollments, only: %i[ new create ]
+    resources :enrollments, only: %i[ new create ]
   end
   get "up" => "rails/health#show", as: :rails_health_check
   root "home#index"

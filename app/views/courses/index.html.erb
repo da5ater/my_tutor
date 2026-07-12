@@ -27,7 +27,7 @@
   <div class="row g-4">
     <aside class="col-12 col-lg-3">
       <div class="card-premium p-3 p-md-4">
-        <%= search_form_for @ransack_courses, as: :courses_search, url: courses_path, method: :get, html: { class: "d-flex flex-column gap-3" } do |f| %>
+        <%= search_form_for @ransack_courses, as: :courses_search, url: (@ransack_path || courses_path), method: :get, html: { class: "d-flex flex-column gap-3" } do |f| %>
           <div>
             <%= f.label :title_cont, "Title", class: "form-label fw-semibold small text-secondary" %>
             <%= f.search_field :title_cont, placeholder: "Course title", class: "form-control rounded-pill px-4" %>
@@ -64,7 +64,7 @@
               <span>Search</span>
             <% end %>
 
-            <%= link_to courses_path, class: "btn btn-outline-secondary rounded-pill d-inline-flex align-items-center justify-content-center", title: "Clear search" do %>
+            <%= link_to (@ransack_path || courses_path), class: "btn btn-outline-secondary rounded-pill d-inline-flex align-items-center justify-content-center", title: "Clear search" do %>
               <i class="fa-solid fa-rotate-left"></i>
             <% end %>
           </div>
