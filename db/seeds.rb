@@ -1,3 +1,4 @@
+PublicActivity.enabled = false
 Course.destroy_all
 User.destroy_all
 Role.destroy_all
@@ -53,4 +54,4 @@ mohamed = User.new(
   end
 
 
-  PublicActivity::Activity.destroy_all
+PublicActivity.enabled = true

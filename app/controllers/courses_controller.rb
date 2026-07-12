@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
         # @courses = @q.result.includes(:user).order(created_at: :desc)
         # if current_user.has_role?(:admin)
         @ransack_courses ||= Course.ransack(params[:courses_search], search_key: :courses_search)
-        @courses = @ransack_courses.result.includes(:user).order(created_at: :desc)
+       @pagy, @courses =pagy(@ransack_courses.result.includes(:user).order(created_at: :desc))
     # else
     # redirect_to root_path
     # flash[:alert] = "You are nos authorized to view this page."

@@ -141,3 +141,31 @@ trix-toolbar .trix-button.trix-active {
   margin-bottom: 1rem;
 }
 
+/* Pagy / Bootstrap Pagination Styling overrides */
+.pagination .page-link {
+  color: var(--ink-color);
+  border-color: var(--hairline);
+  border-radius: 8px;
+  margin: 0 2px;
+  padding: 8px 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination .page-link:hover {
+  color: var(--primary-hover) !important;
+  background-color: var(--surface-soft) !important;
+  border-color: var(--hairline);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #ffffff !important;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: var(--muted-color);
+  opacity: 0.6;
+}
+
+

@@ -14,5 +14,5 @@ class Lesson < ApplicationRecord
   end
 
   include PublicActivity::Model
-  tracked owner: ->(controller, model) { controller.current_user }
+  tracked owner: ->(controller, model) { controller&.current_user }
 end

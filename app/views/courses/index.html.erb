@@ -133,6 +133,11 @@
           </table>
         </div>
       </div>
+      <% if @pagy.present? && @pagy.pages > 1 %>
+        <div class="mt-4 d-flex justify-content-center">
+          <%== @pagy.series_nav(:bootstrap) %>
+        </div>
+      <% end %>
     </div>
   </div>
 

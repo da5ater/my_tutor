@@ -30,6 +30,8 @@ class ApplicationController < ActionController::Base
     current_user.try :touch
   end
 
+  include Pagy::Method
+
   private
 
   def user_not_authorized
