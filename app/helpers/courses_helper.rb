@@ -26,4 +26,21 @@ module CoursesHelper
     end
   end
 
+  def review_button(course)
+    if current_user
+      user_course = course.enrollments.where(user_id: current_user.id)
+      if user_course.any?
+        if user_course.respond_to?(:pending_review) ? user_course.pending_review.any? : (user_course.first.rating.blank? && user_course.first.review.blank?)
+          link_to edit_enrollment_path(user_course.first), class: "btn btn-warning btn-sm px-3 py-2 fw-semibold rounded-pill d-inline-flex align-items-center gap-1" do
+            raw("<i class='fa-solid fa-star'></i> Add a Review")
+          end
+        else
+          link_to enrollment_path(user_course.first), class: "btn btn-outline-info btn-sm px-3 py-2 fw-semibold rounded-pill d-inline-flex align-items-center gap-1" do
+            raw("<i class='fa-solid fa-eye'></i> Your Review")
+          end
+        end
+      end
+    end
+  end
+
 end

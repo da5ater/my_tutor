@@ -125,6 +125,12 @@
     </div>
   </div>
 
+  <% if @pagy.present? && @pagy.pages > 1 %>
+    <div class="mt-4 d-flex justify-content-center">
+      <%== @pagy.series_nav(:bootstrap) %>
+    </div>
+  <% end %>
+
   <div class="mt-5">
     <%= link_to root_path, class: "btn btn-link px-0 text-decoration-none d-inline-flex align-items-center gap-2 fw-semibold text-secondary" do %>
       <i class="fa-solid fa-arrow-left"></i> Back to Home

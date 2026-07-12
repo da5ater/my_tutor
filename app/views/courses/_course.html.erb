@@ -40,6 +40,10 @@
           </div>
         </div>
       
+      <div class="d-flex flex-column gap-2 mb-2">
+        <%= enrollment_button(course) %>
+        <%= review_button(course) %>
+      </div>
       <%= link_to course_path(course), class: "btn btn-outline-primary btn-sm w-100 py-2 fw-bold d-flex align-items-center justify-content-center gap-1" do %>
         View Course <i class="fa-solid fa-chevron-right small"></i>
       <% end %>

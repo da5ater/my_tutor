@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
     @ransack_courses = Course.ransack(params[:courses_search], search_key: :courses_search)
   end
 
+  def after_sign_in_path_for(resource)
+    root_path
+  end
+
   include PublicActivity::StoreController
 
 
