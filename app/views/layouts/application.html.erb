@@ -68,15 +68,17 @@
                   <a class="nav-link dropdown-toggle fw-bold px-3 text-secondary d-flex align-items-center gap-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-graduation-cap"></i> Learn
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end shadow border border-light-subtle rounded-3 mt-2">
+                  <ul class="dropdown-menu dropdown-menu-end shadow border border-light-subtle rounded-3 mt-2" style="min-width: 200px;">
                     <li>
-                      <%= link_to purchased_courses_path, class: "dropdown-item py-2 small fw-semibold" do %>
-                        <i class="fa-solid fa-book-open me-2"></i> My Courses
+                      <%= link_to purchased_courses_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
+                        <span><i class="fa-solid fa-book-open me-2 text-secondary"></i> My Courses</span>
+                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= current_user.enrollments.count %></span>
                       <% end %>
                     </li>
                     <li>
-                      <%= link_to pending_review_courses_path, class: "dropdown-item py-2 small fw-semibold" do %>
-                        <i class="fa-regular fa-star me-2"></i> Pending Reviews
+                      <%= link_to pending_review_courses_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
+                        <span><i class="fa-regular fa-star me-2 text-secondary"></i> Pending Reviews</span>
+                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= current_user.enrollments.pending_review.count %></span>
                       <% end %>
                     </li>
                   </ul>
@@ -89,20 +91,22 @@
                   <a class="nav-link dropdown-toggle fw-bold px-3 text-secondary d-flex align-items-center gap-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-chalkboard-user"></i> Teach
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end shadow border border-light-subtle rounded-3 mt-2">
+                  <ul class="dropdown-menu dropdown-menu-end shadow border border-light-subtle rounded-3 mt-2" style="min-width: 220px;">
                     <li>
                       <%= link_to new_course_path, class: "dropdown-item py-2 small fw-semibold" do %>
-                        <i class="fa-solid fa-plus me-1"></i><i class="fa-solid fa-graduation-cap me-2"></i> New Course
+                        <i class="fa-solid fa-plus me-1 text-secondary"></i><i class="fa-solid fa-graduation-cap me-2 text-secondary"></i> New Course
                       <% end %>
                     </li>
                     <li>
-                      <%= link_to created_courses_path, class: "dropdown-item py-2 small fw-semibold" do %>
-                        <i class="fa-solid fa-book me-2"></i> My Created Courses
+                      <%= link_to created_courses_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
+                        <span><i class="fa-solid fa-book me-2 text-secondary"></i> My Created Courses</span>
+                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= current_user.courses.count %></span>
                       <% end %>
                     </li>
                     <li>
-                      <%= link_to my_students_enrollments_path, class: "dropdown-item py-2 small fw-semibold" do %>
-                        <i class="fa-solid fa-users me-2"></i> My Students
+                      <%= link_to my_students_enrollments_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
+                        <span><i class="fa-solid fa-users me-2 text-secondary"></i> My Students</span>
+                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= Enrollment.joins(:course).where(courses: { user_id: current_user.id }).count %></span>
                       <% end %>
                     </li>
                   </ul>
@@ -115,20 +119,22 @@
                   <a class="nav-link dropdown-toggle fw-bold px-3 text-secondary d-flex align-items-center gap-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-cogs"></i> Admin
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end shadow border border-light-subtle rounded-3 mt-2">
+                  <ul class="dropdown-menu dropdown-menu-end shadow border border-light-subtle rounded-3 mt-2" style="min-width: 180px;">
                     <li>
-                      <%= link_to users_path, class: "dropdown-item py-2 small fw-semibold" do %>
-                        <i class="fa-solid fa-users me-2"></i> Users
+                      <%= link_to users_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
+                        <span><i class="fa-solid fa-users me-2 text-secondary"></i> Users</span>
+                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= User.count %></span>
                       <% end %>
                     </li>
                     <li>
-                      <%= link_to enrollments_path, class: "dropdown-item py-2 small fw-semibold" do %>
-                        <i class="fa-solid fa-lock-open me-2"></i> Enrollments
+                      <%= link_to enrollments_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
+                        <span><i class="fa-solid fa-lock-open me-2 text-secondary"></i> Enrollments</span>
+                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= Enrollment.count %></span>
                       <% end %>
                     </li>
                     <li>
                       <%= link_to activity_path, class: "dropdown-item py-2 small fw-semibold" do %>
-                        <i class="fa-solid fa-bell me-2"></i> Activity
+                        <i class="fa-solid fa-bell me-2 text-secondary"></i> Activity
                       <% end %>
                     </li>
                   </ul>

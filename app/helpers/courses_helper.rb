@@ -11,16 +11,16 @@ module CoursesHelper
           raw("<i class='fa-solid fa-circle-check'></i> Already Enrolled. Keep Learning")
         end
       elsif course.price > 0
-        link_to new_course_enrollments_path(course), class: "btn btn-success btn-sm px-3 py-2 fw-bold rounded-pill d-inline-flex align-items-center gap-1" do
+        link_to new_course_enrollment_path(course), class: "btn btn-success btn-sm px-3 py-2 fw-bold rounded-pill d-inline-flex align-items-center gap-1" do
           raw("<i class='fa-solid fa-cart-shopping'></i> Enroll: #{number_to_currency(course.price, precision: 0)}")
         end
       else
-        link_to new_course_enrollments_path(course), class: "btn btn-success btn-sm px-3 py-2 fw-bold rounded-pill d-inline-flex align-items-center gap-1" do
+        link_to new_course_enrollment_path(course), class: "btn btn-success btn-sm px-3 py-2 fw-bold rounded-pill d-inline-flex align-items-center gap-1" do
           raw("<i class='fa-solid fa-graduation-cap'></i> Enroll for Free")
         end
       end
     else
-      link_to new_course_enrollments_path(course), class: "btn btn-success btn-sm px-3 py-2 fw-bold rounded-pill d-inline-flex align-items-center gap-1" do
+      link_to new_course_enrollment_path(course), class: "btn btn-success btn-sm px-3 py-2 fw-bold rounded-pill d-inline-flex align-items-center gap-1" do
         raw("<i class='fa-solid fa-tag'></i> Check Price")
       end
     end

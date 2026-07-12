@@ -116,13 +116,6 @@ class CoursesController < ApplicationController
 
 
 
-  def my_students
-    @ransack_path = my_students_courses_path
-
-    @q = Enrollment.joins(:course).where(courses: { user_id: current_user.id }).ransack(params[:q])
-    @pagy, @enrollments = pagy(@q.result.includes(:user, :course).order(created_at: :desc))
-    render :index
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
