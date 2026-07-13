@@ -66,14 +66,17 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "show records an authorized lesson view once" do
-  assert_difference("UserLesson.count", 1) do
-    get course_lesson_url(@course, @lesson)
-  end
+    assert_difference("UserLesson.count", 1) do
+      get course_lesson_url(@course, @lesson)
+    end
 
-  assert_response :success
+    assert_response :success
+    user_lesson = @user.user_lessons.find_by!(lesson: @lesson)
+    assert_equal 1, user_lesson.impressions
 
-  assert_no_difference("UserLesson.count") do
-    get course_lesson_url(@course, @lesson)
+    assert_no_difference("UserLesson.count") do
+      get course_lesson_url(@course, @lesson)
+    end
+    assert_equal 2, user_lesson.reload.impressions
   end
-end
 end

@@ -53,7 +53,9 @@ class User < ApplicationRecord
 
 
   def view_lesson(lesson)
-    user_lessons.find_or_create_by!(lesson: lesson)
+    user_lesson = user_lessons.find_or_create_by!(lesson: lesson)
+    user_lesson.increment!(:impressions)
+    user_lesson
   end
 
   private

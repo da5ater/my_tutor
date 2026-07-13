@@ -80,8 +80,8 @@
       </article>
     </div>
 
-    <div class="col-12">
-      <article class="analytics-chart-card p-4 p-md-5 rounded-4" data-chart="course-popularity">
+    <div class="col-12 col-xl-6">
+      <article class="analytics-chart-card h-100 p-4 p-md-5 rounded-4" data-chart="course-popularity">
         <div class="mb-4">
           <h2 class="h4 fw-bold text-dark mb-1">Course popularity</h2>
           <p class="text-secondary small mb-0">Enrollment count by course title.</p>
@@ -90,6 +90,27 @@
           height: "360px",
           colors: ["#ff385c"],
           xtitle: "Enrollments",
+          library: { plugins: { legend: { display: false } } } %>
+      </article>
+    </div>
+
+    <div class="col-12 col-xl-6">
+      <article class="analytics-chart-card h-100 p-4 p-md-5 rounded-4" data-chart="moneymakers">
+        <div class="d-flex align-items-start justify-content-between gap-3 mb-4">
+          <div>
+            <h2 class="h4 fw-bold text-dark mb-1">Top moneymakers</h2>
+            <p class="text-secondary small mb-0">Recorded revenue by course title.</p>
+          </div>
+          <span class="analytics-stat__icon flex-shrink-0" aria-hidden="true">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </span>
+        </div>
+        <%= bar_chart "/charts/moneymakers",
+          height: "360px",
+          colors: ["#222222"],
+          prefix: "$",
+          xtitle: "Revenue",
+          empty: "No paid enrollments yet",
           library: { plugins: { legend: { display: false } } } %>
       </article>
     </div>

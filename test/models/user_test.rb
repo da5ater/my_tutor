@@ -1,6 +1,24 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
+  test "viewing a lesson counts every impression without duplicating the viewing record" do
+    user = users(:one)
+    lesson = lessons(:one)
+    user.user_lessons.where(lesson: lesson).delete_all
+
+    first_view = nil
+    assert_difference("UserLesson.count", 1) do
+      first_view = user.view_lesson(lesson)
+    end
+    assert_equal 1, first_view.impressions
+
+    second_view = nil
+    assert_no_difference("UserLesson.count") do
+      second_view = user.view_lesson(lesson)
+    end
+    assert_equal 2, second_view.impressions
+  end
+
   test "destroying a user anonymizes historical records instead of deleting them" do
     user = users(:one)
     course = courses(:one)

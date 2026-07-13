@@ -15,4 +15,8 @@ class ChartsController < ApplicationController
   def authorize_admin_dashboard
     authorize :admin_dashboard, :show?
   end
+
+  def moneymakers
+    render json: Enrollment.joins(:course).group("courses.title").sum(:price)
+  end
 end
