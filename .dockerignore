@@ -29,6 +29,7 @@
 !/storage/.keep
 /tmp/storage/*
 !/tmp/storage/.keep
+/db/*.sqlite3*
 
 # Ignore assets.
 /node_modules/
