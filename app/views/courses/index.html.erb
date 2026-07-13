@@ -113,6 +113,9 @@
                     <td class="py-3 px-4">
                       <div class="fw-semibold text-dark"><%= course.title %></div>
                       <div class="text-muted small"><%= course.short_description %></div>
+                      <div class="mt-2">
+                        <%= render "courses/publication_status", course: course %>
+                      </div>
                     </td>
                     <td class="py-3 px-4">
                       <div class="d-flex flex-wrap gap-2">

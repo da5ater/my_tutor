@@ -114,5 +114,25 @@
           library: { plugins: { legend: { display: false } } } %>
       </article>
     </div>
+
+    <div class="col-12">
+      <article class="analytics-chart-card p-4 p-md-5 rounded-4" data-chart="lesson-impressions">
+        <div class="d-flex align-items-start justify-content-between gap-3 mb-4">
+          <div>
+            <h2 class="h4 fw-bold text-dark mb-1">Lesson impressions</h2>
+            <p class="text-secondary small mb-0">Total authorized lesson openings by lesson title.</p>
+          </div>
+          <span class="analytics-stat__icon flex-shrink-0" aria-hidden="true">
+            <i class="fa-solid fa-eye"></i>
+          </span>
+        </div>
+        <%= bar_chart "/charts/lesson_impressions",
+          height: "360px",
+          colors: ["#ff385c"],
+          xtitle: "Impressions",
+          empty: "No lesson impressions yet",
+          library: { plugins: { legend: { display: false } } } %>
+      </article>
+    </div>
   </section>
 </div>

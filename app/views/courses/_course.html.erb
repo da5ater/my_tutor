@@ -7,6 +7,10 @@
     <h5 class="card-title fw-extrabold text-dark font-heading mb-2">
       <%= course.title %>
     </h5>
+
+    <div class="mb-3">
+      <%= render "courses/publication_status", course: course %>
+    </div>
     
     <!-- Course Description -->
     <div class="card-text text-secondary small mb-3" style="line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">

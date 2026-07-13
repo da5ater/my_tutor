@@ -15,6 +15,7 @@ class EnrollmentsController < ApplicationController
 
   # GET /enrollments/new
   def new
+    authorize @course, :enroll?
     @enrollment = Enrollment.new
   end
 
@@ -25,6 +26,8 @@ class EnrollmentsController < ApplicationController
 
   # POST /enrollments or /enrollments.json
   def create
+    authorize @course, :enroll?
+
     if @course.price > 0
       flash[:alert] = "in development"
       redirect_to new_course_enrollment_path(@course)

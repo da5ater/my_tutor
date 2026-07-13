@@ -6,6 +6,7 @@ class EnrollmentsControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
     @enrollment = enrollments(:one)
     @course = courses(:two)
+    @course.update_columns(published: true, approved: true) if @course.respond_to?(:published)
   end
 
   test "should get index" do

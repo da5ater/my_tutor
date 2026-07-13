@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy ]
+  before_action :set_course, only: %i[ show edit update destroy approve unapprove ]
   skip_before_action :authenticate_user!, only: [ :index, :show ]
   # GET /courses or /courses.json
   def index
@@ -11,7 +11,8 @@ class CoursesController < ApplicationController
         # @q = Course.ransack(params[:q])
         # @courses = @q.result.includes(:user).order(created_at: :desc)
         # if current_user.has_role?(:admin)
-        @ransack_courses ||= Course.ransack(params[:courses_search], search_key: :courses_search)
+        catalog = Course.publicly_available
+        @ransack_courses ||= catalog.ransack(params[:courses_search], search_key: :courses_search)
        @pagy, @courses =pagy(@ransack_courses.result.includes(:user).order(created_at: :desc))
     # else
     # redirect_to root_path
@@ -22,6 +23,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1 or /courses/1.json
   def show
+    authorize @course
     @lessons = @course.lessons.order(created_at: :asc)
   end
 
@@ -120,6 +122,30 @@ def purchased
   end
 
 
+  def approve
+    authorize @course, :approve?
+    @course.update!(approved: true)
+      redirect_to @course, notice: "Course was successfully approved."
+  end
+
+  def unapprove
+    authorize @course, :approve?
+    @course.update!(approved: false)
+    redirect_to @course, notice: "Course approval withdrawn."
+  end
+
+def unapproved
+  authorize Course, :approve?
+  @ransack_path = unapproved_courses_path
+  @ransack_courses = Course.unapproved.ransack(
+    params[:courses_search],
+    search_key: :courses_search
+  )
+  @pagy, @courses = pagy(
+    @ransack_courses.result.includes(:user).order(created_at: :desc)
+  )
+  render :index
+end
 
 
   private
@@ -130,6 +156,6 @@ def purchased
 
     # Only allow a list of trusted parameters through.
     def course_params
-      params.expect(course: [ :title, :description, :short_description, :language, :level, :price ])
+      params.expect(course: [ :title, :description, :short_description, :language, :level, :price, :published ])
     end
 end

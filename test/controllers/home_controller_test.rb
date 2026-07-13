@@ -16,12 +16,13 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "[data-analytics-dashboard]"
-    assert_select "[data-chart]", count: 4
+    assert_select "[data-chart]", count: 5
     assert_select "a[href='/analytics']", text: /Analytics/
     assert_includes response.body, "/charts/users_per_day"
     assert_includes response.body, "/charts/enrollments_per_day"
     assert_includes response.body, "/charts/course_popularity"
     assert_includes response.body, "/charts/moneymakers"
+    assert_includes response.body, "/charts/lesson_impressions"
     assert_includes response.body, '"chartkick": "/assets/chartkick-'
     assert_includes response.body, '"Chart.bundle": "/assets/Chart.bundle-'
   end
@@ -43,6 +44,10 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     get "/charts/moneymakers"
+    assert_response :success
+    assert_equal "application/json", response.media_type
+
+    get "/charts/lesson_impressions"
     assert_response :success
     assert_equal "application/json", response.media_type
   end

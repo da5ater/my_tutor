@@ -43,6 +43,24 @@
                     input_html: { class: "form-control py-2.5", min: 0, step: 1 } %>
       </div>
     </div>
+
+    <% if f.object.respond_to?(:published) && f.object.user == current_user %>
+      <div class="mt-4 p-4 rounded-4 border bg-light bg-opacity-50" data-course-publishing-field>
+        <div class="d-flex align-items-start gap-3">
+          <span class="analytics-stat__icon flex-shrink-0" aria-hidden="true">
+            <i class="fa-solid fa-paper-plane"></i>
+          </span>
+          <div class="flex-grow-1">
+            <%= f.input :published,
+                        as: :boolean,
+                        label: "Submit this course for publishing",
+                        hint: "Leave this off while drafting. Published courses still require administrator approval before entering the public catalog.",
+                        wrapper_html: { class: "mb-0" },
+                        input_html: { class: "form-check-input" } %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-actions">

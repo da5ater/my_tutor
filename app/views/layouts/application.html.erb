@@ -132,6 +132,14 @@
                         <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= Enrollment.count %></span>
                       <% end %>
                     </li>
+                    <% if respond_to?(:unapproved_courses_path) && Course.column_names.include?("approved") %>
+                      <li>
+                        <%= link_to unapproved_courses_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
+                          <span><i class="fa-solid fa-shield-halved me-2 text-secondary"></i> Course approvals</span>
+                          <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= Course.unapproved.count %></span>
+                        <% end %>
+                      </li>
+                    <% end %>
                     <li>
                       <%= link_to analytics_path, class: "dropdown-item py-2 small fw-semibold" do %>
                         <i class="fa-solid fa-chart-line me-2 text-secondary"></i> Analytics

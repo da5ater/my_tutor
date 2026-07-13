@@ -6,9 +6,17 @@ Rails.application.routes.draw do
     get :purchased, on: :collection
     get :pending_review, on: :collection
     get :created, on: :collection
+    get :unapproved, on: :collection
     resources :lessons
     resources :enrollments, only: %i[ new create ]
+
+    member do
+      patch :approve
+      patch :unapprove
+    end
   end
+
+
   get "up" => "rails/health#show", as: :rails_health_check
   root "home#index"
   get "activity", to: "home#activity"
@@ -27,6 +35,7 @@ Rails.application.routes.draw do
     get "enrollments_per_day"
     get "course_popularity"
     get "moneymakers"
+    get "lesson_impressions"
   end
 
 

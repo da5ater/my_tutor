@@ -1,6 +1,19 @@
 require "test_helper"
 
 class CourseTest < ActiveSupport::TestCase
+  test "public availability requires publishing and approval" do
+    course = courses(:one)
+
+    course.update_columns(published: false, approved: true)
+    assert_not course.reload.publicly_available?
+
+    course.update_columns(published: true, approved: false)
+    assert_not course.reload.publicly_available?
+
+    course.update_columns(published: true, approved: true)
+    assert course.reload.publicly_available?
+  end
+
   test "progress is zero for a course without lessons" do
     course = courses(:one)
     course.lessons.destroy_all

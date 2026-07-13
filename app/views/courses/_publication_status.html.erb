@@ -1,0 +1,23 @@
+<% if course.respond_to?(:published) && current_user && (course.user == current_user || current_user.has_role?(:admin)) %>
+  <div class="d-flex flex-wrap gap-2" data-course-publication-status="<%= course.id %>">
+    <% if course.published? %>
+      <span class="badge rounded-pill px-3 py-2 bg-success-subtle text-success-emphasis border border-success-subtle">
+        <i class="fa-solid fa-eye me-1" aria-hidden="true"></i> Published
+      </span>
+    <% else %>
+      <span class="badge rounded-pill px-3 py-2 bg-light text-secondary border">
+        <i class="fa-solid fa-pen-ruler me-1" aria-hidden="true"></i> Draft
+      </span>
+    <% end %>
+
+    <% if course.approved? %>
+      <span class="badge rounded-pill px-3 py-2 bg-success-subtle text-success-emphasis border border-success-subtle">
+        <i class="fa-solid fa-shield-circle-check me-1" aria-hidden="true"></i> Approved
+      </span>
+    <% else %>
+      <span class="badge rounded-pill px-3 py-2 bg-warning-subtle text-warning-emphasis border border-warning-subtle">
+        <i class="fa-solid fa-hourglass-half me-1" aria-hidden="true"></i> Awaiting approval
+      </span>
+    <% end %>
+  </div>
+<% end %>

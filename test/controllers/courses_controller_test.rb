@@ -24,6 +24,8 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to course_url(Course.last)
+    assert_not Course.last.published?
+    assert_not Course.last.approved?
   end
 
   test "should show course" do

@@ -12,16 +12,29 @@ class CoursePolicy < ApplicationPolicy
     # end
   end
 
+  def show?
+    record.publicly_available? || user.present? && (record.user == user || user.has_role?(:admin) || record.bought?(user))
+  end
+
+  def enroll?
+    user.present? && record.publicly_available? && !owner?
+  end
+
+
   def edit?
-    @user.has_role?(:admin) || @record.user == @user
+    owner?
   end
 
   def update?
-    @user.has_role?(:admin) || @record.user == @user
+    owner?
   end
 
   def destroy?
-    @user.has_role?(:admin) || @record.user == @user
+    owner? || admin?
+  end
+
+  def approve?
+    admin?
   end
 
   def new?
@@ -30,5 +43,15 @@ class CoursePolicy < ApplicationPolicy
 
   def create?
     @user.has_role?(:admin) || @user.has_role?(:teacher)
+  end
+
+  private
+
+  def admin?
+    user&.has_role?(:admin)
+  end
+
+  def owner?
+    user.present? && record.user == user
   end
 end
