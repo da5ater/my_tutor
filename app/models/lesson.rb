@@ -16,7 +16,7 @@ class Lesson < ApplicationRecord
 
 
   def viewed_by?(user)
-    user.present? && user_lessons.exists?(user_id: user.id)
+    user.present? && user_lessons.where(user_id: user.id).exists?
   end
 
 

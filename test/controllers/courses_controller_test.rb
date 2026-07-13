@@ -52,10 +52,21 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy course" do
+    @course.enrollments.destroy_all
+
     assert_difference("Course.count", -1) do
       delete course_url(@course)
     end
 
     assert_redirected_to courses_url
+  end
+
+  test "should explain why an enrolled course cannot be destroyed" do
+    assert_no_difference("Course.count") do
+      delete course_url(@course)
+    end
+
+    assert_redirected_to course_url(@course)
+    assert_equal "Course has enrollments and cannot be destroyed.", flash[:alert]
   end
 end

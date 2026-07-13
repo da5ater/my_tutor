@@ -110,10 +110,8 @@
       <section class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white d-flex flex-column">
         <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
           <h3 class="fw-extrabold text-dark font-heading m-0 d-flex align-items-center gap-2">
-            <i class="fa-solid fa-book-bookmark text-primary"></i> Lessons
-            <span class="badge bg-light text-secondary border rounded-pill fs-6 px-2.5 py-1">
-              <%= @course.respond_to?(:lessons_count) ? @course.lessons_count : @course.lessons.count %>
-            </span>
+            <i class="fa-solid fa-book-bookmark text-primary"></i>
+            <%= pluralize(@lessons.count, "Lesson") %>
           </h3>
           <span class="text-secondary small">Open a lesson to view its content</span>
         </div>
@@ -141,14 +139,14 @@
   <div class="row g-4 mt-2">
     <div class="col-12">
       <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+        <% reviews = @course.enrollments.where.not(rating: nil).order(updated_at: :desc) %>
         <h3 class="fw-extrabold text-dark font-heading mb-4 d-flex align-items-center gap-2">
           <i class="fa-solid fa-star text-primary" style="color: var(--ink-color) !important;"></i> Reviews
           <span class="badge bg-light text-secondary border rounded-pill fs-6 px-2.5 py-1">
-            <%= @course.enrollments.where.not(rating: nil).count %>
+            <%= pluralize(reviews.count, "review") %>
           </span>
         </h3>
         
-        <% reviews = @course.enrollments.where.not(rating: nil).order(updated_at: :desc) %>
         <% if reviews.any? %>
           <!-- Airbnb-style Rating Display Card & distribution -->
           <div class="row g-4 mb-5 pb-4 border-bottom align-items-center">

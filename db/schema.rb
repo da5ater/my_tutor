@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_13_142028) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_13_160236) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -78,7 +78,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_142028) do
     t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["slug"], name: "index_courses_on_slug", unique: true
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
@@ -91,7 +91,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_142028) do
     t.text "review"
     t.string "slug"
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["course_id"], name: "index_enrollments_on_course_id"
     t.index ["slug"], name: "index_enrollments_on_slug", unique: true
     t.index ["user_id"], name: "index_enrollments_on_user_id"
@@ -134,7 +134,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_142028) do
     t.datetime "created_at", null: false
     t.integer "lesson_id", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["lesson_id"], name: "index_user_lessons_on_lesson_id"
     t.index ["user_id", "lesson_id"], name: "index_user_lessons_on_user_id_and_lesson_id", unique: true
     t.index ["user_id"], name: "index_user_lessons_on_user_id"

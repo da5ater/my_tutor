@@ -13,7 +13,17 @@ class HomeController < ApplicationController
     @latest_good_reviews = Enrollment.reviewed.latest_good_reviews
   end
 
+  def analytics
+    authorize :admin_dashboard, :show?
+
+    @users_count = User.count
+    @enrollments_count = Enrollment.count
+    @active_courses_count = Enrollment.distinct.count(:course_id)
+  end
+
+
   def activity
+     authorize :admin_dashboard, :show?
     @activities = PublicActivity::Activity.order(created_at: :desc).all
   end
 end

@@ -121,6 +121,100 @@ h1, h2, h3, h4, h5, h6 {
     position: sticky;
     top: 5.5rem;
   }
+
+  .lesson-curriculum-sticky {
+    position: sticky;
+    top: 5.5rem;
+  }
+}
+
+.lesson-label {
+  color: var(--primary-color);
+  background-color: rgba(255, 56, 92, 0.1);
+  border-radius: 9999px;
+}
+
+.lesson-reading-content {
+  line-height: 1.75;
+}
+
+.lesson-curriculum__eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.lesson-curriculum__list {
+  max-height: calc(100vh - 20rem);
+  overflow-y: auto;
+}
+
+.lesson-curriculum__item {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--body-color);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lesson-curriculum__item:last-child {
+  border-bottom: 0;
+}
+
+.lesson-curriculum__item:hover {
+  background-color: var(--surface-soft);
+}
+
+.lesson-curriculum__item.is-current {
+  background-color: rgba(255, 56, 92, 0.08);
+  box-shadow: inset 4px 0 0 var(--primary-color);
+}
+
+.lesson-curriculum__number {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--hairline);
+  border-radius: 9999px;
+  background: #ffffff;
+  color: var(--muted-color);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.lesson-curriculum__item.is-current .lesson-curriculum__number {
+  color: #ffffff;
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.lesson-curriculum__current-icon {
+  color: var(--primary-color);
+  font-size: 0.75rem;
+}
+
+/* Admin analytics */
+.analytics-eyebrow {
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.analytics-stat,
+.analytics-chart-card {
+  background-color: #ffffff;
+  border: 1px solid var(--hairline);
+  box-shadow: rgba(0, 0, 0, 0.04) 0 2px 8px;
+}
+
+.analytics-stat__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  background-color: rgba(255, 56, 92, 0.1);
+  border-radius: 9999px;
 }
 
 /* Form Styles */

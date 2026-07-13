@@ -33,4 +33,14 @@ class CourseTest < ActiveSupport::TestCase
   test "progress is zero without a user" do
     assert_equal 0.0, courses(:one).progress_for(nil)
   end
+
+  test "a course with enrollments cannot be destroyed" do
+    course = courses(:one)
+
+    assert_no_difference("Course.count") do
+      assert_not course.destroy
+    end
+
+    assert course.errors[:base].any?
+  end
 end

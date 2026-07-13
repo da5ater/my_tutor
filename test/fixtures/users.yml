@@ -8,8 +8,12 @@ one:
   email: mohamed@example.com
   encrypted_password: "<%= Devise::Encryptor.digest(User , '123456') %>"
   confirmed_at: "<%= Time.current %>"
+  courses_count: 1
+  enrollments_count: 1
 
 two: 
   email: hassan@example.com 
   encrypted_password: "<%= Devise::Encryptor.digest(User , '123456') %>"
   confirmed_at: "<%= Time.current %>"
+  courses_count: 1
+  enrollments_count: 1

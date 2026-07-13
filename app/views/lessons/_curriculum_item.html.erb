@@ -1,0 +1,24 @@
+<% current = lesson == current_lesson %>
+<% viewed = current_user.present? && lesson.viewed_by?(current_user) %>
+
+<%= link_to [lesson.course, lesson],
+  class: class_names("lesson-curriculum__item d-flex align-items-center gap-3 text-decoration-none", "is-current": current),
+  aria: { current: ("page" if current) },
+  data: { curriculum_lesson: lesson.id } do %>
+  <span class="lesson-curriculum__number d-inline-flex align-items-center justify-content-center flex-shrink-0"><%= index + 1 %></span>
+
+  <span class="min-w-0 flex-grow-1">
+    <span class="d-block fw-semibold text-dark text-truncate"><%= lesson.title %></span>
+    <span class="d-block small mt-1 <%= viewed ? "text-dark" : "text-secondary" %>">
+      <% if viewed %>
+        <i class="fa-solid fa-circle-check me-1 text-success" aria-hidden="true"></i> Viewed
+      <% else %>
+        <i class="fa-regular fa-circle me-1" aria-hidden="true"></i> Not viewed
+      <% end %>
+    </span>
+  </span>
+
+  <% if current %>
+    <i class="fa-solid fa-play lesson-curriculum__current-icon flex-shrink-0" aria-label="Current lesson"></i>
+  <% end %>
+<% end %>

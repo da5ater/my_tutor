@@ -5,9 +5,9 @@ class User < ApplicationRecord
   :recoverable, :rememberable, :validatable, :trackable, :confirmable
 
 
-  has_many :courses, dependent: :destroy
-  has_many :enrollments, dependent: :destroy
-  has_many :user_lessons, dependent: :destroy
+  has_many :courses, dependent: :nullify
+  has_many :enrollments, dependent: :nullify
+  has_many :user_lessons, dependent: :nullify
   has_many :viewed_lessons, through: :user_lessons, source: :lesson
 
   def self.ransackable_attributes(auth_object = nil)

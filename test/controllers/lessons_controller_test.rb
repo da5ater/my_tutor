@@ -27,8 +27,23 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show lesson" do
+    second_lesson = lessons(:two)
+    second_lesson.update_column(:course_id, @course.id)
+
     get course_lesson_url(@course, @lesson)
+
     assert_response :success
+    assert_select "[data-lesson-curriculum]"
+    assert_select "[data-curriculum-lesson]", count: 2
+    assert_select "[data-curriculum-lesson='#{@lesson.id}'][aria-current='page']", count: 1
+  end
+
+  test "show cannot load a lesson through another course" do
+    @user.add_role(:admin)
+
+    get course_lesson_url(@course, lessons(:two))
+
+    assert_response :not_found
   end
 
   test "should get edit" do

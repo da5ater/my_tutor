@@ -11,10 +11,10 @@ class Course < ApplicationRecord
 
 
   has_rich_text :description
-  belongs_to :user, counter_cache: true
+  belongs_to :user, optional: true, counter_cache: true
   has_many :lessons, dependent: :destroy
   has_many :user_lessons, through: :lessons
-  has_many :enrollments, dependent: :destroy
+  has_many :enrollments, dependent: :restrict_with_error
 
 
   before_save :check_description_changes

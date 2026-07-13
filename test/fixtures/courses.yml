@@ -9,6 +9,8 @@ one:
   price: 500
   user: one
   slug: introduction-to-ruby-on-rails-8
+  enrollments_count: 1
+  lessons_count: 1
 
 two:
   title: Advanced Database Design and Optimization
@@ -19,3 +21,5 @@ two:
   price: 1000
   user: two
   slug: advanced-database-design-and-optimization
+  enrollments_count: 1
+  lessons_count: 1
