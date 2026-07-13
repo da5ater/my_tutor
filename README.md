@@ -1,26 +1,42 @@
-# README
+# MyTutor
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+MyTutor is a Rails learning marketplace demo with role-based course publishing,
+enrollments, lesson progress, reviews, activity tracking, and an admin analytics
+dashboard.
 
-Things you may want to cover:
+## Local setup
 
-- Ruby version
+```sh
+bin/setup
+bin/rails server
+```
 
-- System dependencies
+Run the test suite with:
 
-- Configuration
+```sh
+bin/rails test
+```
 
-- Database creation
+## Portfolio demo data
 
-- Database initialization
+The demo seed imports real public learning-path metadata from the
+[Microsoft Learn Catalog API](https://learn.microsoft.com/en-us/training/support/catalog-api-developer-reference).
+A learning path becomes a course and its modules become lessons. Every imported
+description includes a link to the original Microsoft Learn material.
 
-- How to run the test suite
+Users, instructors, marketplace prices, enrollments, reviews, progress, and
+impressions are synthetic portfolio data. This keeps the analytics realistic
+without using private user information or presenting demo purchases as real.
 
-- Services (job queues, cache servers, search engines, etc.)
+To replace the local database contents with the demo catalog:
 
-- Deployment instructions
+```sh
+DEMO_RESET=1 \
+DEMO_ADMIN_PASSWORD='choose-a-local-password' \
+DEMO_USER_PASSWORD='choose-another-local-password' \
+bin/rails db:seed
+```
 
-- ...
-
-
+The production seed refuses to run unless `DEMO_RESET=1` is explicitly set and
+both passwords are provided as environment variables. Never commit production
+credentials.
