@@ -1,6 +1,6 @@
 class Enrollment < ApplicationRecord
   belongs_to :course, counter_cache: true
-  belongs_to :user
+  belongs_to :user, counter_cache: true
 
   validates :user, :course, presence: true
 
@@ -9,7 +9,6 @@ class Enrollment < ApplicationRecord
   validates_uniqueness_of :course_id, scope: :user_id
 
   validate :cant_subscribe_to_own_course
-  scope :pending_review, -> { where(rating: nil, review: nil) }
 
   extend FriendlyId
   friendly_id :to_s, use: :slugged
@@ -17,6 +16,9 @@ class Enrollment < ApplicationRecord
   after_save :update_course_rating
   after_destroy :update_course_rating
 
+
+  scope :pending_review, -> { where(rating: nil, review: nil) }
+  scope :reviewed, -> { where.not(review: [ nil, "" ]) }
 
   def to_s
     user.to_s + " --> " + course.to_s

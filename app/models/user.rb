@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :enrollments, dependent: :destroy
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[email sign_in_count created_at updated_at]
+    %w[email sign_in_count created_at updated_at courses_count enrollments_count]
   end
 
   def username

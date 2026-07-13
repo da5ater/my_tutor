@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_12_171244) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_13_104451) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -71,6 +71,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_171244) do
     t.text "description"
     t.integer "enrollments_count", default: 0, null: false
     t.string "language", default: "English", null: false
+    t.integer "lessons_count", default: 0, null: false
     t.string "level", default: "Beginer", null: false
     t.integer "price", default: 0, null: false
     t.text "short_description"
@@ -133,11 +134,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_12_171244) do
     t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
+    t.integer "courses_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "current_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "enrollments_count", default: 0, null: false
     t.datetime "last_sign_in_at"
     t.string "last_sign_in_ip"
     t.datetime "remember_created_at"

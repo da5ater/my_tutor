@@ -3,58 +3,48 @@
   <div style="height: 6px; background-color: #ff385c;"></div>
   
   <div class="card-body p-4 d-flex flex-column flex-grow-1">
-    <div class="d-flex align-items-center justify-content-between mb-2">
-      <div class="d-flex align-items-center gap-2">
-        <span class="badge text-secondary bg-light border fw-normal small px-2 py-1">
-          <i class="fa-solid fa-book-open me-1" style="color: #ff385c;"></i> Course
-        </span>
-        <% 
-          rated_enrollments = course.enrollments.where.not(rating: nil)
-          avg_rating = (course.respond_to?(:average_rating) && course.average_rating.present? && course.average_rating > 0) ? course.average_rating : (rated_enrollments.any? ? rated_enrollments.average(:rating).round(1).to_f : 0.0)
-          students_count = course.respond_to?(:enrollments_count) ? course.enrollments_count : course.enrollments.count
-        %>
-        <% if avg_rating > 0 %>
-          <span class="badge text-dark bg-light border fw-bold small px-2 py-1" title="Average Rating">
-            <i class="fa-solid fa-star" style="color: var(--ink-color);"></i> <%= avg_rating %>
-          </span>
-        <% end %>
-        <span class="badge text-secondary bg-light border fw-bold small px-2 py-1" title="Enrolled Students">
-          <i class="fa-solid fa-user-group me-1" style="color: #ff385c;"></i> <%= students_count %>
-        </span>
-      </div>
-      <span class="text-muted small">
-        <i class="fa-regular fa-clock me-1"></i> <%= course.created_at.strftime('%b %d, %Y') %>
-      </span>
-    </div>
-    
+    <!-- Course Title -->
     <h5 class="card-title fw-extrabold text-dark font-heading mb-2">
       <%= course.title %>
     </h5>
     
-    <div class="card-text text-secondary small flex-grow-1 mb-4" style="line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">
+    <!-- Course Description -->
+    <div class="card-text text-secondary small mb-3" style="line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">
       <%= strip_tags(course.description.to_plain_text).truncate(120) %>
     </div>
+
+    <!-- Course Metadata (Rating, Students, Lessons, Creator) -->
+    <% 
+      rated_enrollments = course.enrollments.where.not(rating: nil)
+      avg_rating = (course.respond_to?(:average_rating) && course.average_rating.present? && course.average_rating > 0) ? course.average_rating : (rated_enrollments.any? ? rated_enrollments.average(:rating).round(1).to_f : 0.0)
+      students_count = course.respond_to?(:enrollments_count) ? course.enrollments_count : course.enrollments.count
+    %>
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
+      <% if avg_rating > 0 %>
+        <span class="badge text-dark bg-light border fw-bold small px-2 py-1" title="Average Rating">
+          <i class="fa-solid fa-star" style="color: var(--ink-color);"></i> <%= avg_rating %>
+        </span>
+      <% end %>
+      <span class="badge text-secondary bg-light border fw-bold small px-2 py-1" title="Enrolled Students">
+        <i class="fa-solid fa-user-group me-1" style="color: #ff385c;"></i> <%= students_count %>
+      </span>
+      <span class="badge text-secondary bg-light border fw-bold small px-2 py-1" title="Lessons">
+        <i class="fa-solid fa-book-bookmark me-1" style="color: #ff385c;"></i> <%= pluralize(course.respond_to?(:lessons_count) ? course.lessons_count : course.lessons.count, "lesson") %>
+      </span>
+      <span class="badge text-secondary bg-light border fw-semibold small px-2 py-1" title="Tutor">
+        <i class="fa-solid fa-chalkboard-user me-1" style="color: #ff385c;"></i>
+        <% if course.user %>
+          <%= link_to course.user.username, user_path(course.user), class: "text-decoration-none text-secondary hover-underline fw-semibold" %>
+        <% else %>
+          Unknown Tutor
+        <% end %>
+      </span>
+      <%# <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><%= course.language %></span> %>
+      <%# <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><%= course.level %></span> %>
+    </div>
     
+    <!-- Action buttons -->
     <div class="border-top pt-3 mt-auto">
-        <div class="d-flex align-items-center justify-content-between w-100 mb-3">
-          <div class="d-flex align-items-center text-truncate">
-            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center border me-2" style="width: 32px; height: 32px; flex-shrink: 0;">
-              <i class="fa-solid fa-chalkboard-user text-secondary" style="font-size: 0.85rem;"></i>
-            </div>
-            <span class="text-secondary text-truncate small" title="<%= course.user&.email %>">
-              <% if course.user %>
-                <%= link_to course.user.username, user_path(course.user), class: "text-decoration-none text-secondary hover-underline fw-semibold" %>
-              <% else %>
-                Unknown Tutor
-              <% end %>
-            </span>
-          </div>
-          <div class="d-flex align-items-center text-muted small gap-1 flex-shrink-0">
-            <i class="fa-solid fa-book-bookmark" style="color: #ff385c;"></i>
-            <span class="fw-bold"><%= pluralize(course.lessons.count, "lesson") %></span>
-          </div>
-        </div>
-      
       <div class="d-flex flex-column gap-2 mb-2">
         <%= enrollment_button(course) %>
         <%= review_button(course) %>

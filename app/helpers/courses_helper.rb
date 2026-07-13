@@ -36,7 +36,7 @@ module CoursesHelper
           end
         else
           link_to enrollment_path(user_course.first), class: "btn btn-outline-info btn-sm px-3 py-2 fw-semibold rounded-pill d-inline-flex align-items-center gap-1" do
-            raw("<i class='fa-solid fa-eye'></i> Your Review")
+            raw("<i class='fa-solid fa-check'></i> Your Review")
           end
         end
       end

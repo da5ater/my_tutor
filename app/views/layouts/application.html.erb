@@ -72,7 +72,7 @@
                     <li>
                       <%= link_to purchased_courses_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
                         <span><i class="fa-solid fa-book-open me-2 text-secondary"></i> My Courses</span>
-                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= current_user.enrollments.count %></span>
+                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= current_user.respond_to?(:enrollments_count) ? current_user.enrollments_count : current_user.enrollments.count %></span>
                       <% end %>
                     </li>
                     <li>
@@ -100,7 +100,7 @@
                     <li>
                       <%= link_to created_courses_path, class: "dropdown-item py-2 small fw-semibold d-flex align-items-center justify-content-between" do %>
                         <span><i class="fa-solid fa-book me-2 text-secondary"></i> My Created Courses</span>
-                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= current_user.courses.count %></span>
+                        <span class="badge bg-secondary text-white rounded-pill px-2 py-0.5" style="font-size: 0.7rem;"><%= current_user.respond_to?(:courses_count) ? current_user.courses_count : current_user.courses.count %></span>
                       <% end %>
                     </li>
                     <li>

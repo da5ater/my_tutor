@@ -87,9 +87,11 @@
         <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
           <h3 class="fw-extrabold text-dark font-heading m-0 d-flex align-items-center gap-2">
             <i class="fa-solid fa-book-bookmark text-primary"></i> Lessons
-            <span class="badge bg-light text-secondary border rounded-pill fs-6 px-2.5 py-1"><%= @course.lessons.count %></span>
+            <span class="badge bg-light text-secondary border rounded-pill fs-6 px-2.5 py-1">
+              <%= @course.respond_to?(:lessons_count) ? @course.lessons_count : @course.lessons.count %>
+            </span>
           </h3>
-          <% if current_user && policy(@course).edit? %>
+          <% if current_user && policy(@course).respond_to?(:owner?) && policy(@course).owner? %>
             <%= link_to new_course_lesson_path(@course), class: "btn btn-primary btn-sm rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-1" do %>
               <i class="fa-solid fa-plus small"></i> Add Lesson
             <% end %>
@@ -105,7 +107,7 @@
             <div class="text-center py-5 text-muted my-auto">
               <i class="fa-solid fa-book-open fs-1 mb-3 text-secondary opacity-50"></i>
               <p class="m-0 fw-semibold">No lessons available for this course yet.</p>
-              <% if current_user && policy(@course).edit? %>
+              <% if current_user && policy(@course).respond_to?(:owner?) && policy(@course).owner? %>
                 <small class="text-secondary d-block mt-1">Click the "Add Lesson" button above to create one.</small>
               <% end %>
             </div>

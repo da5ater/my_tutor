@@ -86,6 +86,26 @@
         <div>Trackable metrics offline.</div>
       </div>
     <% end %>
+
+    <div class="border-top pt-3 mt-3">
+      <h6 class="fw-bold text-dark font-heading mb-3 small text-uppercase" style="letter-spacing: 0.5px; color: #ff385c !important;">
+        <i class="fa-solid fa-graduation-cap me-1"></i> Account Stats
+      </h6>
+      <div class="d-flex flex-column gap-2 small text-secondary">
+        <div class="d-flex align-items-center justify-content-between py-1 border-bottom border-light">
+          <span>Courses Created</span>
+          <span class="badge bg-light text-dark border px-2 py-1 fw-bold">
+            <%= user.respond_to?(:courses_count) ? user.courses_count : user.courses.count %>
+          </span>
+        </div>
+        <div class="d-flex align-items-center justify-content-between py-1">
+          <span>Enrollments</span>
+          <span class="badge bg-light text-dark border px-2 py-1 fw-bold">
+            <%= user.respond_to?(:enrollments_count) ? user.enrollments_count : user.enrollments.count %>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="card-footer bg-light border-top p-3 d-flex justify-content-end">

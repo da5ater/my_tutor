@@ -47,6 +47,12 @@
             <th class="px-4 py-3">
               <%= sort_link(@q, :created_at, "Joined", {}, { class: "text-decoration-none text-secondary fw-bold d-inline-flex align-items-center gap-2" }) %>
             </th>
+            <th class="px-4 py-3">
+              <%= sort_link(@q, :courses_count, "Courses", {}, { class: "text-decoration-none text-secondary fw-bold d-inline-flex align-items-center gap-2" }) %>
+            </th>
+            <th class="px-4 py-3">
+              <%= sort_link(@q, :enrollments_count, "Enrollments", {}, { class: "text-decoration-none text-secondary fw-bold d-inline-flex align-items-center gap-2" }) %>
+            </th>
             <th class="px-4 py-3 text-end" style="width: 15%;">Actions</th>
           </tr>
         </thead>
@@ -102,6 +108,16 @@
                   <% end %>
                 </td>
                 <td class="px-4 py-3 text-secondary"><%= time_ago_in_words(user.created_at) %> ago</td>
+                <td class="px-4 py-3 text-secondary">
+                  <span class="badge bg-light text-dark border rounded-pill px-3 py-2">
+                    <%= user.respond_to?(:courses_count) ? user.courses_count : user.courses.count %>
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-secondary">
+                  <span class="badge bg-light text-dark border rounded-pill px-3 py-2">
+                    <%= user.respond_to?(:enrollments_count) ? user.enrollments_count : user.enrollments.count %>
+                  </span>
+                </td>
                 <td class="px-4 py-3 text-end">
                   <% if policy(user).edit? %>
                     <%= link_to edit_user_path(user), class: "btn btn-sm btn-outline-primary rounded-2 px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1" do %>

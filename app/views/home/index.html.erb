@@ -99,14 +99,96 @@
 
   <hr class="my-5 opacity-25">
 
+  <!-- Continue Learning Section -->
+  <% if @purchased_courses.present? %>
+    <div class="mb-5 animate-fade-in">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <h2 class="fw-extrabold text-dark font-heading mb-1"><i class="fa-solid fa-graduation-cap text-primary" style="color: #ff385c !important;"></i> Continue Learning</h2>
+          <p class="text-muted mb-0 small">Pick up where you left off in your courses.</p>
+        </div>
+        <%= link_to purchased_courses_path, class: "text-decoration-none fw-bold text-primary small d-flex align-items-center gap-1" do %>
+          My Courses <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+      </div>
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% @purchased_courses.each do |course| %>
+          <div class="col">
+            <%= render course %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <hr class="my-5 opacity-25">
+  <% end %>
+
+  <!-- Popular Courses Section -->
+  <div class="mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <div>
+        <h2 class="fw-extrabold text-dark font-heading mb-1"><i class="fa-solid fa-chart-line text-primary" style="color: #ff385c !important;"></i> Popular Courses</h2>
+        <p class="text-muted mb-0 small">Our most applied programs with active students.</p>
+      </div>
+      <%= link_to courses_path, class: "text-decoration-none fw-bold text-primary small d-flex align-items-center gap-1" do %>
+        See all <i class="fa-solid fa-arrow-right"></i>
+      <% end %>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <% if @popular_courses&.any? %>
+        <% @popular_courses.each do |course| %>
+          <div class="col">
+            <%= render course %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="col-12 text-center py-4 text-muted">
+          No popular courses found.
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <hr class="my-5 opacity-25">
+
+  <!-- Top Rated Courses Section -->
+  <div class="mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <div>
+        <h2 class="fw-extrabold text-dark font-heading mb-1"><i class="fa-solid fa-star text-primary" style="color: #ff385c !important;"></i> Top Rated Courses</h2>
+        <p class="text-muted mb-0 small">Programs reviewed highly by our learning community.</p>
+      </div>
+      <%= link_to courses_path, class: "text-decoration-none fw-bold text-primary small d-flex align-items-center gap-1" do %>
+        See all <i class="fa-solid fa-arrow-right"></i>
+      <% end %>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <% if @top_rated_courses&.any? %>
+        <% @top_rated_courses.each do |course| %>
+          <div class="col">
+            <%= render course %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="col-12 text-center py-4 text-muted">
+          No rated courses found.
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <hr class="my-5 opacity-25">
+
   <!-- Latest Courses Section -->
   <div class="mb-5">
     <div class="d-flex justify-content-between align-items-end mb-4">
       <div>
-        <h2 class="fw-extrabold text-dark font-heading mb-1">Latest Courses</h2>
+        <h2 class="fw-extrabold text-dark font-heading mb-1"><i class="fa-solid fa-clock text-primary" style="color: #ff385c !important;"></i> Latest Courses</h2>
         <p class="text-muted mb-0 small">The most recently published tutoring programs.</p>
       </div>
-      <%= link_to  courses_path, class: "text-decoration-none fw-bold text-primary small d-flex align-items-center gap-1" do %>
+      <%= link_to courses_path, class: "text-decoration-none fw-bold text-primary small d-flex align-items-center gap-1" do %>
         See all <i class="fa-solid fa-arrow-right"></i>
       <% end %>
     </div>
@@ -128,57 +210,25 @@
 
   <hr class="my-5 opacity-25">
 
-  <!-- Popular Courses Section -->
+  <!-- Reviews Section -->
   <div class="mb-5">
     <div class="d-flex justify-content-between align-items-end mb-4">
       <div>
-        <h2 class="fw-extrabold text-dark font-heading mb-1">Popular Courses</h2>
-        <p class="text-muted mb-0 small">Our most applied programs with active students.</p>
+        <h2 class="fw-extrabold text-dark font-heading mb-1"><i class="fa-solid fa-comment text-primary" style="color: #ff385c !important;"></i> What our students have to say</h2>
+        <p class="text-muted mb-0 small">The latest reviews left by our student community.</p>
       </div>
-      <%= link_to  courses_path, class: "text-decoration-none fw-bold text-primary small d-flex align-items-center gap-1" do %>
-        See all <i class="fa-solid fa-arrow-right"></i>
-      <% end %>
     </div>
-
+    
     <div class="row row-cols-1 row-cols-md-3 g-4">
-      <% if @courses&.any? %>
-        <% @courses.each do |course| %>
+      <% if @latest_good_reviews&.any? %>
+        <% @latest_good_reviews.each do |enrollment| %>
           <div class="col">
-            <%= render course %>
+            <%= render 'enrollments/enrollment', enrollment: enrollment %>
           </div>
         <% end %>
       <% else %>
         <div class="col-12 text-center py-4 text-muted">
-          No popular courses found.
-        </div>
-      <% end %>
-    </div>
-  </div>
-
-  <hr class="my-5 opacity-25">
-
-  <!-- Top Rated Courses Section -->
-  <div class="mb-5">
-    <div class="d-flex justify-content-between align-items-end mb-4">
-      <div>
-        <h2 class="fw-extrabold text-dark font-heading mb-1">Top Rated Courses</h2>
-        <p class="text-muted mb-0 small">Programs reviewed highly by our learning community.</p>
-      </div>
-      <%= link_to  courses_path, class: "text-decoration-none fw-bold text-primary small d-flex align-items-center gap-1" do %>
-        See all <i class="fa-solid fa-arrow-right"></i>
-      <% end %>
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <% if @courses&.any? %>
-        <% @courses.each do |course| %>
-          <div class="col">
-            <%= render course %>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="col-12 text-center py-4 text-muted">
-          No rated courses found.
+          No reviews available yet.
         </div>
       <% end %>
     </div>
