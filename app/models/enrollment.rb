@@ -19,6 +19,7 @@ class Enrollment < ApplicationRecord
 
   scope :pending_review, -> { where(rating: nil, review: nil) }
   scope :reviewed, -> { where.not(review: [ nil, "" ]) }
+  scope :latest_good_reviews, -> { order(rating: :desc, created_at: :desc).limit(3) }
 
   def to_s
     user.to_s + " --> " + course.to_s

@@ -1,0 +1,26 @@
+<% progress_user = local_assigns.fetch(:user, current_user) %>
+<% compact = local_assigns.fetch(:compact, false) %>
+<% if progress_user && course.bought?(progress_user) %>
+  <% lesson_count = course.lessons.count %>
+  <div class="course-progress rounded-3 <%= compact ? "p-2" : "p-3" %>" data-course-progress="<%= course.id %>" data-progress-user="<%= progress_user.id %>">
+    <div class="d-flex align-items-center justify-content-between gap-3 mb-2">
+      <span class="small fw-semibold text-dark d-inline-flex align-items-center gap-2">
+        <i class="fa-solid fa-chart-simple course-progress__icon" aria-hidden="true"></i>
+        <%= compact ? "Progress" : "Course progress" %>
+      </span>
+
+      <% if lesson_count.zero? %>
+        <span class="small text-secondary">No lessons yet</span>
+      <% else %>
+        <% progress = course.progress_for(progress_user).clamp(0.0, 100.0) %>
+        <span class="small fw-bold text-dark"><%= number_to_percentage(progress, precision: 0) %></span>
+      <% end %>
+    </div>
+
+    <% unless lesson_count.zero? %>
+      <div class="progress course-progress__track" role="progressbar" aria-label="Course progress" aria-valuenow="<%= progress.round %>" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar course-progress__bar" style="width: <%= progress %>%"></div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_13_104451) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_13_142028) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -130,6 +130,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_104451) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
+  create_table "user_lessons", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "lesson_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["lesson_id"], name: "index_user_lessons_on_lesson_id"
+    t.index ["user_id", "lesson_id"], name: "index_user_lessons_on_user_id_and_lesson_id", unique: true
+    t.index ["user_id"], name: "index_user_lessons_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "confirmation_sent_at"
     t.string "confirmation_token"
@@ -170,4 +180,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_13_104451) do
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"
   add_foreign_key "lessons", "courses"
+  add_foreign_key "user_lessons", "lessons"
+  add_foreign_key "user_lessons", "users"
 end

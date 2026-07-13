@@ -1,0 +1,18 @@
+<div class="container py-5">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb bg-transparent p-0 m-0">
+      <li class="breadcrumb-item"><%= link_to "Courses", courses_path %></li>
+      <li class="breadcrumb-item"><%= link_to @course.title, course_path(@course) %></li>
+      <li class="breadcrumb-item active" aria-current="page">Lessons</li>
+    </ol>
+  </nav>
+
+  <h3 class="fw-bold mb-4">Lessons for <%= @course.title %></h3>
+  <div class="list-group">
+    <% @lessons.each do |lesson| %>
+      <%= link_to [@course, lesson], class: "list-group-item list-group-item-action" do %>
+        <%= lesson.title %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

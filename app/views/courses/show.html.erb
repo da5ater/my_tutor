@@ -15,15 +15,15 @@
   </nav>
 
   <div class="row g-4">
-    <!-- Left Column: Course Details -->
-    <div class="col-lg-6">
-      <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white h-100 d-flex flex-column">
+    <!-- Course summary: first on small screens, sticky sidebar on desktop -->
+    <aside class="col-lg-4 order-1 order-lg-2">
+      <div class="card border-0 shadow-sm rounded-4 p-4 bg-white course-summary-sticky">
         <div class="d-flex align-items-center justify-content-between mb-4">
           <span class="badge mb-0 px-3 py-2 fw-semibold" style="background-color: rgba(255, 56, 92, 0.1); color: #ff385c; border-radius: 50px;">
             <i class="fa-solid fa-graduation-cap me-1"></i> Course Details
           </span>
           <span class="text-muted small">
-            <i class="fa-regular fa-clock me-1"></i> Created <%= @course.created_at.strftime('%b %d, %Y') %>
+            <i class="fa-regular fa-clock me-1"></i> Updated <%= @course.updated_at.strftime('%b %Y') %>
           </span>
         </div>
         
@@ -38,6 +38,12 @@
               Unknown Tutor
             <% end %>
           </span>
+          <span class="badge bg-light text-secondary border px-3 py-2 fw-semibold">
+            <i class="fa-solid fa-earth-africa me-1" style="color: #ff385c;"></i> <%= @course.language %>
+          </span>
+          <span class="badge bg-light text-secondary border px-3 py-2 fw-semibold">
+            <i class="fa-solid fa-signal me-1" style="color: #ff385c;"></i> <%= @course.level %>
+          </span>
           <% 
             rated_enrollments = @course.enrollments.where.not(rating: nil)
             avg_rating = (@course.respond_to?(:average_rating) && @course.average_rating.present? && @course.average_rating > 0) ? @course.average_rating : (rated_enrollments.any? ? rated_enrollments.average(:rating).round(1).to_f : 0.0)
@@ -51,21 +57,29 @@
           <span class="badge bg-light text-secondary border px-3 py-2 fw-bold" title="Enrolled Students">
             <i class="fa-solid fa-user-group me-1" style="color: #ff385c;"></i> <%= pluralize(students_count, 'student') %>
           </span>
+          <% unless @course.bought?(current_user) %>
+            <span class="badge bg-light text-dark border px-3 py-2 fw-bold">
+              <i class="fa-solid fa-tag me-1" style="color: #ff385c;"></i> <%= number_to_currency(@course.price, precision: 0) %>
+            </span>
+          <% end %>
+        </div>
+
+        <div class="mb-4">
+          <%= render "courses/progress", course: @course %>
+        </div>
+        
+        <div class="d-grid gap-2 mb-4">
           <%= enrollment_button(@course) %>
           <%= review_button(@course) %>
         </div>
-        
-        <div class="trix-content text-secondary mb-5 fs-5 flex-grow-1" style="line-height: 1.6;">
-          <%= @course.description %>
-        </div>
 
-        <div class="border-top pt-4 mt-auto d-flex justify-content-between align-items-center">
-          <div>
-            <%= link_to courses_path, class: "btn btn-link px-0 text-decoration-none text-secondary fw-semibold d-inline-flex align-items-center gap-2" do %>
-              <i class="fa-solid fa-arrow-left"></i> Back to Courses
+        <div class="border-top pt-4 d-flex flex-wrap gap-2">
+          <% if current_user && policy(@course).edit? %>
+            <%= link_to new_course_lesson_path(@course), class: "btn btn-primary btn-sm rounded-pill px-3 py-2 fw-bold d-inline-flex align-items-center gap-1" do %>
+              <i class="fa-solid fa-plus small"></i> Add Lesson
             <% end %>
-          </div>
-          <div class="d-flex gap-2">
+          <% end %>
+          <div class="d-flex gap-2 ms-auto">
             <% if current_user && policy(@course).edit? %>
               <%= link_to edit_course_path(@course), class: "btn btn-outline-primary fw-bold px-4 py-2.5 rounded-pill" do %>
                 <i class="fa-solid fa-pen-to-square me-1"></i> Edit
@@ -79,11 +93,21 @@
           </div>
         </div>
       </div>
-    </div>
+    </aside>
 
-    <!-- Right Column: Lessons list -->
-    <div class="col-lg-6">
-      <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white h-100 d-flex flex-column">
+    <!-- Main course content -->
+    <div class="col-lg-8 order-2 order-lg-1">
+      <section class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <i class="fa-solid fa-graduation-cap course-progress__icon fs-4" aria-hidden="true"></i>
+          <h2 class="h4 fw-bold text-dark mb-0">About this course</h2>
+        </div>
+        <div class="trix-content text-secondary fs-5" style="line-height: 1.7;">
+          <%= @course.description %>
+        </div>
+      </section>
+
+      <section class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white d-flex flex-column">
         <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
           <h3 class="fw-extrabold text-dark font-heading m-0 d-flex align-items-center gap-2">
             <i class="fa-solid fa-book-bookmark text-primary"></i> Lessons
@@ -91,11 +115,7 @@
               <%= @course.respond_to?(:lessons_count) ? @course.lessons_count : @course.lessons.count %>
             </span>
           </h3>
-          <% if current_user && policy(@course).respond_to?(:owner?) && policy(@course).owner? %>
-            <%= link_to new_course_lesson_path(@course), class: "btn btn-primary btn-sm rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-1" do %>
-              <i class="fa-solid fa-plus small"></i> Add Lesson
-            <% end %>
-          <% end %>
+          <span class="text-secondary small">Open a lesson to view its content</span>
         </div>
 
         <div class="lessons-container d-flex flex-column gap-1 overflow-auto flex-grow-1" style="max-height: 500px;">
@@ -107,13 +127,13 @@
             <div class="text-center py-5 text-muted my-auto">
               <i class="fa-solid fa-book-open fs-1 mb-3 text-secondary opacity-50"></i>
               <p class="m-0 fw-semibold">No lessons available for this course yet.</p>
-              <% if current_user && policy(@course).respond_to?(:owner?) && policy(@course).owner? %>
+              <% if current_user && policy(@course).edit? %>
                 <small class="text-secondary d-block mt-1">Click the "Add Lesson" button above to create one.</small>
               <% end %>
             </div>
           <% end %>
         </div>
-      </div>
+      </section>
     </div>
   </div>
 

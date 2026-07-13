@@ -1,20 +1,42 @@
+<% can_view_lesson = current_user.present? && defined?(LessonPolicy) && policy(lesson).show? %>
+<% viewed_by_current_user = can_view_lesson && lesson.viewed_by?(current_user) %>
+
 <div class="card border border-light-subtle rounded-3 p-3 mb-3 shadow-none hover-shadow-sm transition-all" id="<%= dom_id lesson %>">
   <div class="d-flex justify-content-between align-items-start gap-3">
     <div class="text-truncate flex-grow-1">
       <h5 class="fw-bold fs-6 mb-1 text-truncate">
         <%= link_to lesson.title, [lesson.course, lesson], class: "text-decoration-none text-dark hover-text-primary" %>
       </h5>
-      <div class="text-secondary small text-truncate" style="max-height: 40px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">
-        <% if current_user && defined?(LessonPolicy) && policy(lesson).show? %>
-          <%= strip_tags(lesson.content.to_plain_text).truncate(80) %>
+
+      <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+        <% if can_view_lesson %>
+          <% if viewed_by_current_user %>
+            <span class="d-inline-flex align-items-center gap-1 rounded-pill border px-2 py-1 small fw-semibold text-dark bg-light" aria-label="Lesson viewed">
+              <i class="fa-solid fa-circle-check text-success" aria-hidden="true"></i>
+              Viewed
+            </span>
+          <% else %>
+            <span class="d-inline-flex align-items-center gap-1 rounded-pill border px-2 py-1 small fw-semibold text-secondary bg-white" aria-label="Lesson not viewed">
+              <i class="fa-regular fa-circle text-secondary" aria-hidden="true"></i>
+              Not viewed
+            </span>
+          <% end %>
+
+          <span class="text-secondary small d-inline-flex align-items-center gap-1">
+          <i class="fa-regular fa-circle-play" aria-hidden="true"></i>
+            Open to view content
+          </span>
         <% else %>
-          <span class="text-muted"><i class="fa-solid fa-lock me-1 small"></i> Content is locked</span>
+          <span class="d-inline-flex align-items-center gap-1 rounded-pill border px-2 py-1 small fw-semibold text-secondary bg-light">
+            <i class="fa-solid fa-lock small" aria-hidden="true"></i>
+            Content locked
+          </span>
         <% end %>
       </div>
     </div>
     
     <div class="d-flex gap-1 flex-shrink-0">
-      <% if current_user && defined?(LessonPolicy) && policy(lesson).show? %>
+      <% if can_view_lesson %>
         <%= link_to [lesson.course, lesson], class: "btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center px-2 py-1.5 rounded-2" do %>
           <i class="fa-solid fa-eye" style="font-size: 0.8rem;"></i>
         <% end %>

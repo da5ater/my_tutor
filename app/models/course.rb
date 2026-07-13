@@ -1,5 +1,6 @@
 class Course < ApplicationRecord
   extend FriendlyId
+  include PublicActivity::Model
   friendly_id :title, use: :slugged
 
   validates :title, :description, :short_description, :language, :level, :price, presence: true
@@ -8,13 +9,31 @@ class Course < ApplicationRecord
   validates :price, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   validates :title, uniqueness: true
 
-  def to_s
-    title
-  end
 
   has_rich_text :description
   belongs_to :user, counter_cache: true
   has_many :lessons, dependent: :destroy
+  has_many :user_lessons, through: :lessons
+  has_many :enrollments, dependent: :destroy
+
+
+  before_save :check_description_changes
+  after_update :track_update
+
+  tracked only: [ :create, :destroy ], owner: ->(controller, model) { controller&.current_user }
+
+
+  scope :latest, -> { order(created_at: :desc).limit(3) }
+  scope :popular, -> { order(enrollments_count: :desc, created_at: :desc).limit(3) }
+  scope :top_rated, -> { order(average_rating: :desc, created_at: :desc).limit(3) }
+
+
+  LANGUAGES = [ "English", "Arabic", "French" ]
+  LEVELS = [ "Beginner", "Intermediate", "Advanced" ]
+
+  def to_s
+    title
+  end
 
   def self.ransackable_attributes(auth_object = nil)
     %w[created_at language level price short_description title lessons_count enrollments_count average_rating]
@@ -24,9 +43,6 @@ class Course < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     %w[user]
   end
-
-  LANGUAGES = [ "English", "Arabic", "French" ]
-  LEVELS = [ "Beginner", "Intermediate", "Advanced" ]
 
   def self.languages
     LANGUAGES.map do |language|
@@ -41,13 +57,6 @@ class Course < ApplicationRecord
   end
 
   # Track the course activities
-  include PublicActivity::Model
-  tracked only: [ :create, :destroy ], owner: ->(controller, model) { controller&.current_user }
-
-  before_save :check_description_changes
-  after_update :track_update
-
-  has_many :enrollments
 
   def bought?(user)
     return false unless user
@@ -55,7 +64,7 @@ class Course < ApplicationRecord
     self.enrollments.where(user_id: user.id).exists?
   end
 
-    def update_rating
+  def update_rating
     rated_enrollments = enrollments.where.not(rating: nil)
     if enrollments.any? && rated_enrollments.any?
       update_column :average_rating, rated_enrollments.average(:rating).round(2).to_f
@@ -64,6 +73,17 @@ class Course < ApplicationRecord
     end
   end
 
+
+  def progress_for(user)
+    return 0.0 unless user
+
+    lesson_count = lessons.count
+    return 0.0 if lesson_count.zero?
+
+    viewed_count = user_lessons.where(user_id: user.id).count
+
+    (viewed_count.to_f / lesson_count) * 100.0
+  end
 
   private
 

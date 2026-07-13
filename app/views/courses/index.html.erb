@@ -123,6 +123,9 @@
                           <i class="fa-solid fa-user-group me-1" style="color: #ff385c;"></i> <%= course.respond_to?(:enrollments_count) ? course.enrollments_count : course.enrollments.count %>
                         </span>
                       </div>
+                      <div class="mt-3">
+                        <%= render "courses/progress", course: course %>
+                      </div>
                     </td>
                     <td class="py-3 px-4">
                       <% 

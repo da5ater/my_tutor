@@ -21,6 +21,6 @@ class EnrollmentPolicy < ApplicationPolicy
   end
 
   def destroy?
-    @record.user == @user
+    @user.has_role?(:admin) || @record.user == @user
   end
 end

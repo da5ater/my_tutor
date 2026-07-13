@@ -2,47 +2,63 @@ require "test_helper"
 
 class LessonsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
+    sign_in @user
+    @course = courses(:one)
     @lesson = lessons(:one)
   end
 
   test "should get index" do
-    get lessons_url
+    get course_lessons_url(@course)
     assert_response :success
   end
 
   test "should get new" do
-    get new_lesson_url
+    get new_course_lesson_url(@course)
     assert_response :success
   end
 
   test "should create lesson" do
     assert_difference("Lesson.count") do
-      post lessons_url, params: { lesson: { content: @lesson.content, course_id: @lesson.course_id, title: @lesson.title } }
+      post course_lessons_url(@course), params: { lesson: { content: "This is some valid lesson content that passes validation.", course_id: @course.id, title: "New Lesson Title" } }
     end
 
-    assert_redirected_to lesson_url(Lesson.last)
+    assert_redirected_to course_lesson_url(@course, Lesson.last)
   end
 
   test "should show lesson" do
-    get lesson_url(@lesson)
+    get course_lesson_url(@course, @lesson)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_lesson_url(@lesson)
+    get edit_course_lesson_url(@course, @lesson)
     assert_response :success
   end
 
   test "should update lesson" do
-    patch lesson_url(@lesson), params: { lesson: { content: @lesson.content, course_id: @lesson.course_id, title: @lesson.title } }
-    assert_redirected_to lesson_url(@lesson)
+    patch course_lesson_url(@course, @lesson), params: { lesson: { content: "Updated lesson content that passes validation.", course_id: @course.id, title: "Updated Lesson Title" } }
+    @lesson.reload
+    assert_redirected_to course_lesson_url(@course, @lesson)
   end
 
   test "should destroy lesson" do
     assert_difference("Lesson.count", -1) do
-      delete lesson_url(@lesson)
+      delete course_lesson_url(@course, @lesson)
     end
 
-    assert_redirected_to lessons_url
+    assert_redirected_to course_path(@course)
   end
+
+  test "show records an authorized lesson view once" do
+  assert_difference("UserLesson.count", 1) do
+    get course_lesson_url(@course, @lesson)
+  end
+
+  assert_response :success
+
+  assert_no_difference("UserLesson.count") do
+    get course_lesson_url(@course, @lesson)
+  end
+end
 end

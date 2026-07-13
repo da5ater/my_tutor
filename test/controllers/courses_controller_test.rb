@@ -3,6 +3,7 @@ require "test_helper"
 class CoursesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
+    @user.add_role(:teacher)
     sign_in @user
     @course = courses(:one)
   end
@@ -28,6 +29,16 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   test "should show course" do
     get course_url(@course)
     assert_response :success
+    assert_select "[data-course-progress='#{@course.id}']"
+    assert_select "[role='progressbar'][aria-valuenow='0']"
+  end
+
+  test "purchased courses show the learner progress" do
+    get purchased_courses_url
+
+    assert_response :success
+    assert_select "[data-course-progress='#{@course.id}']"
+    assert_select "[role='progressbar'][aria-valuenow='0']"
   end
 
   test "should get edit" do

@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   has_many :courses, dependent: :destroy
   has_many :enrollments, dependent: :destroy
+  has_many :user_lessons, dependent: :destroy
+  has_many :viewed_lessons, through: :user_lessons, source: :lesson
 
   def self.ransackable_attributes(auth_object = nil)
     %w[email sign_in_count created_at updated_at courses_count enrollments_count]
@@ -47,6 +49,11 @@ class User < ApplicationRecord
 
   def buy_course(course)
     self.enrollments.create!(course: course, price: course.price)
+  end
+
+
+  def view_lesson(lesson)
+    user_lessons.find_or_create_by!(lesson: lesson)
   end
 
   private

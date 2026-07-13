@@ -64,7 +64,7 @@
           <tr>
             <th class="px-4 py-3 text-secondary font-heading fw-bold">
               <% if @q.present? %>
-                <%= sort_link(@q, :created_at, raw("<i class='fa-solid fa-clock'></i> Bought At"), {}, { class: "text-decoration-none text-secondary hover-underline" }) %>
+                <%= sort_link(@q, :created_at, raw("<i class='fa-solid fa-clock'></i> Bought At"), class: "text-decoration-none text-secondary hover-underline") %>
               <% else %>
                 <i class="fa-solid fa-clock"></i> Bought At
               <% end %>
@@ -72,35 +72,38 @@
             <th class="px-4 py-3 text-secondary font-heading fw-bold">ID</th>
             <th class="px-4 py-3 text-secondary font-heading fw-bold">
               <% if @q.present? %>
-                <%= sort_link(@q, :user_email, raw("<i class='fa-solid fa-user'></i> Student"), {}, { class: "text-decoration-none text-secondary hover-underline" }) %>
+                <%= sort_link(@q, :user_email, raw("<i class='fa-solid fa-user'></i> Student"), class: "text-decoration-none text-secondary hover-underline") %>
               <% else %>
                 <i class="fa-solid fa-user"></i> Student
               <% end %>
             </th>
             <th class="px-4 py-3 text-secondary font-heading fw-bold">
               <% if @q.present? %>
-                <%= sort_link(@q, :course_title, raw("<i class='fa-solid fa-graduation-cap'></i> Course"), {}, { class: "text-decoration-none text-secondary hover-underline" }) %>
+                <%= sort_link(@q, :course_title, raw("<i class='fa-solid fa-graduation-cap'></i> Course"), class: "text-decoration-none text-secondary hover-underline") %>
               <% else %>
                 <i class="fa-solid fa-graduation-cap"></i> Course
               <% end %>
             </th>
             <th class="px-4 py-3 text-secondary font-heading fw-bold">
+              <i class="fa-solid fa-chart-simple"></i> Progress
+            </th>
+            <th class="px-4 py-3 text-secondary font-heading fw-bold">
               <% if @q.present? %>
-                <%= sort_link(@q, :price, raw("<i class='fa-solid fa-dollar-sign'></i> Price"), {}, { class: "text-decoration-none text-secondary hover-underline" }) %>
+                <%= sort_link(@q, :price, raw("<i class='fa-solid fa-dollar-sign'></i> Price"), class: "text-decoration-none text-secondary hover-underline") %>
               <% else %>
                 <i class="fa-solid fa-dollar-sign"></i> Price
               <% end %>
             </th>
             <th class="px-4 py-3 text-secondary font-heading fw-bold">
               <% if @q.present? %>
-                <%= sort_link(@q, :updated_at, "Reviewed On", {}, { class: "text-decoration-none text-secondary hover-underline" }) %>
+                <%= sort_link(@q, :updated_at, "Reviewed On", class: "text-decoration-none text-secondary hover-underline") %>
               <% else %>
                 Reviewed On
               <% end %>
             </th>
             <th class="px-4 py-3 text-secondary font-heading fw-bold">
               <% if @q.present? %>
-                <%= sort_link(@q, :rating, raw("<i class='fa-solid fa-star' style='color: var(--ink-color);'></i> Rating"), {}, { class: "text-decoration-none text-secondary hover-underline" }) %>
+                <%= sort_link(@q, :rating, raw("<i class='fa-solid fa-star' style='color: var(--ink-color);'></i> Rating"), class: "text-decoration-none text-secondary hover-underline") %>
               <% else %>
                 <i class="fa-solid fa-star" style="color: var(--ink-color);"></i> Rating
               <% end %>
@@ -136,6 +139,13 @@
                     <%= link_to enrollment.course.title, course_path(enrollment.course), class: "text-decoration-none text-dark hover-underline fw-semibold" %>
                   <% else %>
                     <span class="text-muted italic">Deleted course</span>
+                  <% end %>
+                </td>
+                <td class="px-4 py-3" style="min-width: 170px;">
+                  <% if enrollment.course && enrollment.user %>
+                    <%= render "courses/progress", course: enrollment.course, user: enrollment.user, compact: true %>
+                  <% else %>
+                    <span class="text-muted small">Unavailable</span>
                   <% end %>
                 </td>
                 <td class="px-4 py-3 fw-bold text-dark">
@@ -183,7 +193,7 @@
             <% end %>
           <% else %>
             <tr>
-              <td colspan="9" class="text-center py-5 text-muted">
+              <td colspan="10" class="text-center py-5 text-muted">
                 <i class="fa-solid fa-magnifying-glass fa-2x mb-3 d-block opacity-50"></i>
                 No enrollments found matching the search criteria.
               </td>

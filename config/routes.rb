@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :enrollments do
+  resources :enrollments,  expect: %i[new create] do
     get :my_students, on: :collection
   end
   resources :courses do
